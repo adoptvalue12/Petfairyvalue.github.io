@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FairyValue 🧚 - Edition Mobile Royale</title>
+    <title>FairyValue 🧚 - Full Options</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -18,36 +18,27 @@
         
         body, html { margin: 0; padding: 0; font-family: 'Outfit', sans-serif; min-height: 100vh; background: #fff5f7; color: #333; overflow-x: hidden; }
         
-        /* PAGE D'ACCUEIL CORRIGÉE */
         #home-page {
-            height: 100vh; 
-            background: linear-gradient(rgba(255, 133, 162, 0.3), rgba(0,0,0,0.7)), url('https://wallpapers.com/images/hd/adopt-me-background-r2fa0g7qap0177br.jpg');
-            background-size: cover; background-position: center; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            text-align: center; padding: 0 20px;
+            height: 100vh; background: linear-gradient(rgba(255, 133, 162, 0.3), rgba(0,0,0,0.7)), url('https://wallpapers.com/images/hd/adopt-me-background-r2fa0g7qap0177br.jpg');
+            background-size: cover; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 20px;
         }
         
         .hero-title { 
-            font-size: clamp(2.8rem, 15vw, 5.5rem); /* Taille adaptative pour mobile */
+            font-size: clamp(2.8rem, 15vw, 5.5rem); 
             font-weight: 900; color: white;
             text-shadow: 0 0 25px var(--accent), 0 10px 10px rgba(0,0,0,0.5);
             animation: float 3s ease-in-out infinite; margin: 0;
-            line-height: 1;
         }
         
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
         .btn-container { display: flex; gap: 15px; margin-top: 40px; flex-wrap: wrap; justify-content: center; width: 100%; }
-        
         .glass-btn { 
             background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border: 3px solid white;
             padding: 18px 30px; border-radius: 60px; color: white; font-weight: 900; font-size: 1.1rem;
-            cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
-            min-width: 180px;
+            cursor: pointer; transition: 0.3s; text-transform: uppercase;
         }
-        .glass-btn:hover { background: white; color: var(--accent); transform: scale(1.05); }
 
-        /* SECTIONS */
         .section { display: none; padding: 20px; animation: slideUp 0.5s ease; }
         .active { display: block; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -55,23 +46,24 @@
         /* CALCULATEUR */
         .elve-container { background: white; border-radius: 35px; padding: 25px; max-width: 500px; margin: 0 auto 25px; box-shadow: 0 20px 50px rgba(247,37,133,0.15); text-align: center; }
         .trade-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: white; padding: 15px; border-radius: 30px; border: 5px solid var(--bg-rose); }
-        .slot { width: 85px; height: 85px; background: #fafafa; border: 2px solid #eee; border-radius: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; }
+        .slot { width: 85px; height: 85px; background: #fafafa; border: 2px solid #eee; border-radius: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; }
         .slot img { width: 80%; height: 80%; object-fit: contain; }
-        .slot-label { position: absolute; bottom: 4px; right: 4px; font-size: 0.65rem; font-weight: 900; color: white; background: var(--accent); padding: 2px 6px; border-radius: 6px; }
+        .slot-label { position: absolute; bottom: 4px; right: 4px; font-size: 0.6rem; font-weight: 900; color: white; background: var(--accent); padding: 2px 5px; border-radius: 5px; z-index: 5; }
 
-        /* VALUE LIST STYLÉE */
-        .pet-card { 
-            background: white; border-radius: 25px; padding: 15px; text-align: center; 
-            transition: 0.3s; position: relative; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-        }
+        /* VALUE LIST */
+        .pet-card { background: white; border-radius: 25px; padding: 15px; text-align: center; transition: 0.3s; position: relative; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
         .rarity-bg { position: absolute; top: 0; left: 0; width: 100%; height: 50px; opacity: 0.15; z-index: 1; border-radius: 0 0 50% 50%; }
         .pet-card img { width: 90px; height: 90px; object-fit: contain; position: relative; z-index: 2; }
 
-        /* PICKER */
-        #picker { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; width:90%; max-width: 500px; height:75vh; z-index:2000; border-radius:40px; padding:25px; box-shadow: 0 0 80px rgba(0,0,0,0.4); overflow-y: auto; }
+        /* PICKER & MODIFIERS */
+        #picker { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; width:90%; max-width: 500px; height:80vh; z-index:2000; border-radius:40px; padding:25px; box-shadow: 0 0 80px rgba(0,0,0,0.4); overflow-y: auto; }
         .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index:1999; }
         
-        input[type="text"] { width: 100%; padding: 15px; border-radius: 20px; border: 2px solid #eee; font-family: 'Outfit'; font-weight: 600; outline: none; box-sizing: border-box; }
+        .mod-row { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; justify-content: center; }
+        .m-btn { padding: 10px 15px; border-radius: 15px; border: 2px solid #eee; background: white; font-weight: 900; cursor: pointer; font-size: 0.8rem; transition: 0.2s; }
+        .m-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+        
+        input[type="text"] { width: 100%; padding: 15px; border-radius: 20px; border: 2px solid #eee; font-family: 'Outfit'; font-weight: 600; outline: none; box-sizing: border-box; margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -108,8 +100,17 @@
 
     <div class="overlay" id="overlay" onclick="closePicker()"></div>
     <div id="picker">
+        <div class="mod-row">
+            <div class="m-btn active" id="btn-reg" onclick="updateMod('reg')">REGULAR</div>
+            <div class="m-btn" id="btn-neon" onclick="updateMod('neon')">NEON</div>
+            <div class="m-btn" id="btn-mega" onclick="updateMod('mega')">MEGA</div>
+        </div>
+        <div class="mod-row">
+            <div class="m-btn" id="btn-fly" onclick="toggleExtra('fly')">FLY</div>
+            <div class="m-btn" id="btn-ride" onclick="toggleExtra('ride')">RIDE</div>
+        </div>
         <input type="text" id="search" placeholder="Chercher un pet..." onkeyup="filterPets()">
-        <div id="pet-options" style="margin-top:15px;"></div>
+        <div id="pet-options"></div>
     </div>
 
     <script>
@@ -134,7 +135,22 @@
         ];
 
         let curSide = 'you', curSlot = 0;
+        let curMod = 'reg', hasFly = false, hasRide = false;
         let dataYou = Array(9).fill(0), dataThem = Array(9).fill(0);
+
+        function updateMod(m) {
+            curMod = m;
+            ['reg', 'neon', 'mega'].forEach(x => document.getElementById('btn-'+x).classList.remove('active'));
+            document.getElementById('btn-'+m).classList.add('active');
+            playSound('click');
+        }
+
+        function toggleExtra(e) {
+            if(e === 'fly') hasFly = !hasFly;
+            if(e === 'ride') hasRide = !hasRide;
+            document.getElementById('btn-'+e).classList.toggle('active');
+            playSound('click');
+        }
 
         function playSound(type) {
             const s = document.getElementById('sound-' + type);
@@ -155,6 +171,11 @@
 
         function openPicker(side, slot) {
             playSound('click'); curSide = side; curSlot = slot;
+            // Reset modifiers
+            updateMod('reg'); hasFly = false; hasRide = false;
+            document.getElementById('btn-fly').classList.remove('active');
+            document.getElementById('btn-ride').classList.remove('active');
+            
             document.getElementById('picker').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
             renderOptions();
@@ -176,9 +197,19 @@
 
         function selectPet(name, val, img) {
             playSound('pop');
+            let finalV = val;
+            let label = "";
+
+            if(curMod === 'neon') { finalV *= 4; label += "N"; }
+            if(curMod === 'mega') { finalV *= 16; label += "M"; }
+            if(hasFly) { finalV += 2; label += "F"; }
+            if(hasRide) { finalV += 1; label += "R"; }
+            if(label === "") label = "REG";
+
             const id = curSide === 'you' ? `sy-${curSlot}` : `st-${curSlot}`;
-            document.getElementById(id).innerHTML = `<img src="${img}"><div class="slot-label">REG</div>`;
-            if(curSide === 'you') dataYou[curSlot] = val; else dataThem[curSlot] = val;
+            document.getElementById(id).innerHTML = `<img src="${img}"><div class="slot-label">${label}</div>`;
+            
+            if(curSide === 'you') dataYou[curSlot] = finalV; else dataThem[curSlot] = finalV;
             updateBar(); closePicker();
         }
 
@@ -187,7 +218,16 @@
             document.getElementById('v-you').innerText = sY.toFixed(1);
             document.getElementById('v-them').innerText = sT.toFixed(1);
             const total = sY + sT;
-            document.getElementById('fill').style.width = total === 0 ? "50%" : (sY / total * 100) + "%";
+            const fill = document.getElementById('fill');
+            fill.style.width = total === 0 ? "50%" : (sY / total * 100) + "%";
+            
+            const diff = sT - sY;
+            ['l-win', 'l-fair', 'l-lose'].forEach(l => document.getElementById(l).style.color = "#ccc");
+            if(total > 0) {
+                if(diff > 10) document.getElementById('l-win').style.color = "#2ecc71";
+                else if(diff < -10) document.getElementById('l-lose').style.color = "#ff5e5e";
+                else document.getElementById('l-fair').style.color = "#f1c40f";
+            }
         }
 
         function renderValueList() {
@@ -207,7 +247,6 @@
         }
 
         function closePicker() { document.getElementById('picker').style.display='none'; document.getElementById('overlay').style.display='none'; }
-        
         function filterPets() {
             const s = document.getElementById('search').value.toLowerCase();
             document.querySelectorAll('#pet-options > div').forEach(o => o.style.display = o.innerText.toLowerCase().includes(s) ? "flex" : "none");
