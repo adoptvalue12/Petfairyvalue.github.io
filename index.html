@@ -1,195 +1,198 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FairyValue | Elvebredd Bar Edition</title>
+    <title>FairyValue 🧚 - Adopt Me Trading</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --game-bg: #c1f2d0;
-            --slot-border: #6bbd8a;
-            --elve-bg: #f9f6f0; /* Couleur crème de ta photo */
-            --elve-red: #ff5e5e;
-            --elve-dark: #4a4a4a;
+            --primary: #00d2ff; --accent: #bc13fe; --glass: rgba(255, 255, 255, 0.15);
+            --win: #2ecc71; --loss: #e74c3c; --fair: #f1c40f;
         }
 
-        body { font-family: 'Outfit', sans-serif; background: #f0fdf4; margin: 0; padding: 20px; }
+        body, html { margin: 0; padding: 0; font-family: 'Outfit', sans-serif; height: 100%; color: white; overflow-x: hidden; }
 
-        /* --- LA BARRE ELVEBREDD (TA PHOTO) --- */
-        .elve-bar-container {
-            background: var(--elve-bg);
-            border-radius: 50px;
-            padding: 20px 40px;
-            max-width: 600px;
-            margin: 20px auto;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            text-align: center;
-            position: relative;
+        /* --- ACCUEIL STYLE AMVGG --- */
+        #home-page {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://r2.erisy.ai/service-image/3378.jpg');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
         }
 
-        .bar-labels {
-            display: flex; justify-content: center; gap: 15px;
-            font-weight: 900; color: #ccc; text-transform: uppercase; margin-bottom: 10px;
-        }
-        .active-win { color: #4caf50; }
-        .active-fair { color: #ffc107; }
-        .active-lose { color: var(--elve-red); }
+        .hero-title { font-size: 3.5rem; font-weight: 900; text-shadow: 0 5px 15px rgba(0,0,0,0.5); margin: 0; }
+        .hero-subtitle { font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 30px; text-transform: uppercase; opacity: 0.9; }
 
-        .bar-stats {
-            display: flex; justify-content: space-between; align-items: center;
-            font-size: 2.5rem; font-weight: 900; color: var(--elve-dark);
+        .btn-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+        .glass-btn {
+            background: var(--glass); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);
+            padding: 15px 35px; border-radius: 50px; color: white; font-weight: bold;
+            cursor: pointer; transition: 0.3s; text-decoration: none; display: flex; align-items: center; gap: 10px;
         }
+        .glass-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-3px); }
+        .btn-blue { background: rgba(0, 210, 255, 0.6); }
 
-        .offer-text { font-size: 0.8rem; color: #888; font-weight: bold; margin-top: -5px; }
+        /* --- SECTION CALCULATEUR --- */
+        .section { display: none; padding: 20px; min-height: 100vh; background: #f0fdf4; color: #333; }
+        .active { display: block; }
 
-        /* La ligne de progression */
-        .progress-bg {
-            height: 8px; background: #eee; border-radius: 10px;
-            margin: 15px 0; overflow: hidden; display: flex;
-        }
-        #progress-fill {
-            height: 100%; width: 50%; background: linear-gradient(to right, #ff944d, #ff5e5e);
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        /* BARRE ELVEBREDD */
+        .elve-container { background: #fdfaf5; border-radius: 30px; padding: 20px; max-width: 600px; margin: 0 auto 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); text-align: center; }
+        .elve-bar { height: 10px; background: #eee; border-radius: 10px; margin: 15px 0; overflow: hidden; display: flex; }
+        #fill { height: 100%; width: 50%; background: linear-gradient(to right, #ff944d, #ff5e5e); transition: 0.5s; }
 
-        /* --- GRILLES DE TRADE --- */
-        .trade-ui { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .grid-9 {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
-            background: var(--game-bg); padding: 15px; border-radius: 15px;
-        }
-        .slot {
-            width: 70px; height: 70px; background: #e8f7ed;
-            border: 2px solid var(--slot-border); border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-        }
+        /* GRILLE 9 CASES */
+        .trade-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; background: #c1f2d0; padding: 12px; border-radius: 15px; }
+        .slot { width: 75px; height: 75px; background: #e8f7ed; border: 2px solid #6bbd8a; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; }
         .slot img { width: 85%; height: 85%; object-fit: contain; }
+        .btn-plus { font-size: 2rem; color: #4caf50; font-weight: bold; }
 
-        /* --- LISTE DES PETS --- */
-        .pet-list {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-            gap: 15px; max-width: 900px; margin: 30px auto;
-        }
-        .pet-card {
-            background: white; border-radius: 15px; padding: 10px;
-            text-align: center; border: 1px solid #eee; cursor: pointer; transition: 0.2s;
-        }
-        .pet-card:hover { transform: scale(1.05); border-color: #bc13fe; }
-        .pet-card img { width: 60px; height: 60px; }
+        /* POPUP SELECTION */
+        #picker { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; width:90%; max-width:500px; height:70vh; z-index:2000; border-radius:20px; padding:20px; box-shadow: 0 0 50px rgba(0,0,0,0.3); overflow-y: auto; }
+        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1999; }
+
+        .pet-item { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
+        .pet-item:hover { background: #f9f9f9; }
+        .pet-item img { width: 50px; margin-right: 15px; }
+        .trend { font-size: 0.8rem; margin-left: auto; font-weight: bold; }
+
     </style>
 </head>
 <body>
 
-    <h1 style="text-align:center; color:#bc13fe;">FAIRYVALUE 🧚</h1>
-
-    <div class="elve-bar-container">
-        <div class="bar-labels">
-            <span id="label-win">WIN</span>
-            <span id="label-fair">FAIR</span>
-            <span id="label-lose">LOSE</span>
-        </div>
-        
-        <div class="bar-stats">
-            <div id="numYou">0</div>
-            <div style="font-size: 1rem; color:#ddd;">|</div>
-            <div id="numThem" style="color:var(--elve-red)">0</div>
-        </div>
-        
-        <div style="display:flex; justify-content:space-between; margin-top:-10px;">
-            <div class="offer-text">YOUR OFFER</div>
-            <div class="offer-text">THEIR OFFER</div>
-        </div>
-
-        <div class="progress-bg">
-            <div id="progress-fill"></div>
+    <div id="home-page">
+        <h1 class="hero-title">FAIRYVALUE 🧚</h1>
+        <p class="hero-subtitle">The most trusted Trading Companion</p>
+        <div class="btn-container">
+            <button class="glass-btn btn-blue" onclick="showPage('list-page')">VALUE LIST 📈📉</button>
+            <button class="glass-btn" onclick="showPage('calc-page')">WFL CALCULATOR ✨</button>
         </div>
     </div>
 
-    <div class="trade-ui">
-        <div class="grid-9" id="gridYou"></div>
-        <div style="display:flex; flex-direction:column; gap:10px; justify-content:center;">
-             <select id="side" style="padding:10px; border-radius:10px; border:1px solid #ccc;">
-                <option value="you">Add to You</option>
-                <option value="them">Add to Them</option>
-             </select>
-             <button onclick="location.reload()" style="background:#ff5e5e; color:white; border:none; padding:10px; border-radius:10px; cursor:pointer;">Reset</button>
+    <div id="calc-page" class="section">
+        <button onclick="showPage('home-page')" style="border:none; background:none; color:var(--accent); cursor:pointer; font-weight:bold;">← BACK</button>
+        
+        <div class="elve-container">
+            <div style="display:flex; justify-content:center; gap:20px; font-weight:900; color:#ccc;">
+                <span id="l-win">WIN</span> <span id="l-fair">FAIR</span> <span id="l-lose">LOSE</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:2rem; font-weight:900; margin:10px 0;">
+                <span id="v-you">0</span> <span id="v-them" style="color:#ff5e5e">0</span>
+            </div>
+            <div class="elve-bar"><div id="fill"></div></div>
+            <div style="display:flex; justify-content:space-between; font-size:0.7rem; font-weight:bold; color:#888;">
+                <span>YOUR OFFER</span> <span>THEIR OFFER</span>
+            </div>
         </div>
-        <div class="grid-9" id="gridThem"></div>
+
+        <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+            <div class="trade-grid" id="grid-you"></div>
+            <div class="trade-grid" id="grid-them"></div>
+        </div>
+        <center><button onclick="location.reload()" style="margin-top:20px; padding:10px 30px; border-radius:20px; border:none; background:#ff5e5e; color:white; font-weight:bold;">RESET TRADE</button></center>
     </div>
 
-    <div class="pet-list" id="petList"></div>
+    <div class="overlay" id="overlay" onclick="closePicker()"></div>
+    <div id="picker">
+        <h3>Select a Pet 🐾</h3>
+        <input type="text" id="search" placeholder="Search..." onkeyup="filterPets()" style="width:100%; padding:10px; border-radius:10px; border:1px solid #ddd; margin-bottom:15px;">
+        <div id="pet-options"></div>
+    </div>
 
     <script>
         const pets = [
-            { n: "Shadow Dragon", v: 1000, i: "Shadow_Dragon.png" },
-            { n: "Bat Dragon", v: 865, i: "Bat_Dragon.png" },
-            { n: "Giraffe", v: 520, i: "Giraffe.png" },
-            { n: "Frost Dragon", v: 415, i: "Frost_Dragon.png" },
-            { n: "Owl", v: 265, i: "Owl.png" },
-            { n: "Parrot", v: 215, i: "Parrot.png" },
-            { n: "Evil Unicorn", v: 165, i: "Evil_Unicorn.png" },
-            { n: "Crow", v: 155, i: "Crow.png" },
-            { n: "Turtle", v: 21, i: "Turtle.png" },
-            { n: "Cow", v: 16.5, i: "Cow.png" }
+            { n: "Shadow Dragon", v: 1000, i: "Shadow_Dragon.png", t: "up" },
+            { n: "Bat Dragon", v: 865, i: "Bat_Dragon.png", t: "stable" },
+            { n: "Giraffe", v: 520, i: "Giraffe.png", t: "down" },
+            { n: "Frost Dragon", v: 415, i: "Frost_Dragon.png", t: "up" },
+            { n: "Owl", v: 265, i: "Owl.png", t: "up" },
+            { n: "Parrot", v: 215, i: "Parrot.png", t: "stable" },
+            { n: "Evil Unicorn", v: 165, i: "Evil_Unicorn.png", t: "down" },
+            { n: "Crow", v: 155, i: "Crow.png", t: "up" },
+            { n: "Turtle", v: 21, i: "Turtle.png", t: "up" },
+            { n: "Cow", v: 16.5, i: "Cow.png", t: "up" },
+            { n: "SSBD", v: 13, i: "Strawberry_Shortcake_Bat_Dragon.png", t: "up" }
         ];
 
-        let youVal = 0; let themVal = 0;
-        let youItems = []; let themItems = [];
+        let currentSide = 'you';
+        let currentSlot = 0;
+        let dataYou = Array(9).fill(0);
+        let dataThem = Array(9).fill(0);
 
-        function init() {
-            const gy = document.getElementById('gridYou');
-            const gt = document.getElementById('gridThem');
+        function showPage(id) {
+            document.getElementById('home-page').style.display = (id === 'home-page') ? 'flex' : 'none';
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            if(id !== 'home-page') document.getElementById(id).classList.add('active');
+        }
+
+        function initGrids() {
+            const gy = document.getElementById('grid-you');
+            const gt = document.getElementById('grid-them');
             for(let i=0; i<9; i++) {
-                gy.innerHTML += `<div class="slot" id="y${i}"></div>`;
-                gt.innerHTML += `<div class="slot" id="t${i}"></div>`;
+                gy.innerHTML += `<div class="slot" onclick="openPicker('you', ${i})" id="sy-${i}"><div class="btn-plus">+</div></div>`;
+                gt.innerHTML += `<div class="slot" onclick="openPicker('them', ${i})" id="st-${i}"><div class="btn-plus">+</div></div>`;
             }
-            
-            const list = document.getElementById('petList');
+        }
+
+        function openPicker(side, slot) {
+            currentSide = side; currentSlot = slot;
+            document.getElementById('picker').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+            renderOptions();
+        }
+
+        function closePicker() {
+            document.getElementById('picker').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function renderOptions() {
+            const container = document.getElementById('pet-options');
+            container.innerHTML = "";
             pets.forEach(p => {
+                const trendIcon = p.t === 'up' ? '📈' : (p.t === 'down' ? '📉' : '➖');
+                const trendColor = p.t === 'up' ? 'green' : (p.t === 'down' ? 'red' : 'gray');
                 const img = `https://adoptme.fandom.com/wiki/Special:FilePath/${p.i}?width=100`;
-                list.innerHTML += `
-                    <div class="pet-card" onclick="add('${p.n}', ${p.v}, '${img}')">
+                container.innerHTML += `
+                    <div class="pet-item" onclick="selectPet('${p.n}', ${p.v}, '${img}')">
                         <img src="${img}">
-                        <div style="font-weight:bold; font-size:0.8rem;">${p.n}</div>
-                        <div style="color:#bc13fe; font-weight:900;">${p.v}</div>
+                        <div><b>${p.n}</b><br><small>Value: ${p.v}</small></div>
+                        <div class="trend" style="color:${trendColor}">${trendIcon}</div>
                     </div>`;
             });
         }
 
-        function add(name, val, img) {
-            const side = document.getElementById('side').value;
-            if(side === 'you' && youItems.length < 9) {
-                document.getElementById(`y${youItems.length}`).innerHTML = `<img src="${img}">`;
-                youItems.push(val); youVal += val;
-            } else if (side === 'them' && themItems.length < 9) {
-                document.getElementById(`t${themItems.length}`).innerHTML = `<img src="${img}">`;
-                themItems.push(val); themVal += val;
-            }
+        function selectPet(name, val, img) {
+            const id = currentSide === 'you' ? `sy-${currentSlot}` : `st-${currentSlot}`;
+            document.getElementById(id).innerHTML = `<img src="${img}">`;
+            if(currentSide === 'you') dataYou[currentSlot] = val; else dataThem[currentSlot] = val;
             updateBar();
+            closePicker();
         }
 
         function updateBar() {
-            document.getElementById('numYou').innerText = youVal.toFixed(1);
-            document.getElementById('numThem').innerText = themVal.toFixed(1);
+            const sumYou = dataYou.reduce((a, b) => a + b, 0);
+            const sumThem = dataThem.reduce((a, b) => a + b, 0);
+            document.getElementById('v-you').innerText = sumYou.toFixed(1);
+            document.getElementById('v-them').innerText = sumThem.toFixed(1);
 
-            // Calcul de la barre (Ratio entre les deux)
-            const total = youVal + themVal;
-            const percentage = total === 0 ? 50 : (youVal / total) * 100;
-            document.getElementById('progress-fill').style.width = percentage + "%";
+            const total = sumYou + sumThem;
+            const perc = total === 0 ? 50 : (sumYou / total) * 100;
+            document.getElementById('fill').style.width = perc + "%";
 
-            // Update des labels WIN/FAIR/LOSE
-            const diff = themVal - youVal;
-            const labels = ["label-win", "label-fair", "label-lose"];
-            labels.forEach(l => document.getElementById(l).className = "");
+            const diff = sumThem - sumYou;
+            const labels = ['l-win', 'l-fair', 'l-lose'];
+            labels.forEach(l => document.getElementById(l).style.color = "#ccc");
 
-            if (total === 0) return;
-            if (diff > 5) document.getElementById('label-win').className = "active-win";
-            else if (diff < -5) document.getElementById('label-lose').className = "active-lose";
-            else document.getElementById('label-fair').className = "active-fair";
+            if(total > 0) {
+                if(diff > 5) document.getElementById('l-win').style.color = "#2ecc71";
+                else if(diff < -5) document.getElementById('l-lose').style.color = "#e74c3c";
+                else document.getElementById('l-fair').style.color = "#f1c40f";
+            }
         }
 
-        init();
+        initGrids();
     </script>
 </body>
 </html>
