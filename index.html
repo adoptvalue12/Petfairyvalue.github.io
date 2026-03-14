@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FairyValue 🧚 - Pro Editor</title>
+    <title>FairyValue 🧚 - Market Update</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -11,50 +11,55 @@
             --legendary: linear-gradient(135deg, #ffcc33 0%, #ffab1a 100%);
             --ultra: linear-gradient(135deg, #ff85e1 0%, #f72585 100%);
             --rare: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
+            --uncommon: linear-gradient(135deg, #b5e48c 0%, #76c893 100%);
+            --common: linear-gradient(135deg, #dee2e6 0%, #adb5bd 100%);
             --item: linear-gradient(135deg, #b79ced 0%, #7209b7 100%);
         }
         
         body, html { margin: 0; padding: 0; font-family: 'Outfit', sans-serif; min-height: 100vh; background: #fff5f7; color: #333; overflow-x: hidden; }
         
         #home-page {
-            height: 100vh; background: linear-gradient(rgba(255, 133, 162, 0.3), rgba(0,0,0,0.7)), url('https://wallpapers.com/images/hd/adopt-me-background-r2fa0g7qap0177br.jpg');
+            height: 100vh; background: linear-gradient(rgba(255,133,162,0.3), rgba(0,0,0,0.7)), url('https://wallpapers.com/images/hd/adopt-me-background-r2fa0g7qap0177br.jpg');
             background-size: cover; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 20px;
         }
-        .hero-title { font-size: clamp(2.5rem, 12vw, 5.5rem); font-weight: 900; color: white; text-shadow: 0 0 25px var(--accent), 0 10px 10px rgba(0,0,0,0.5); animation: float 3s infinite; margin: 0; line-height: 1; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .hero-title { font-size: clamp(2.5rem, 12vw, 5.5rem); font-weight: 900; color: white; text-shadow: 0 0 25px var(--accent), 0 10px 10px rgba(0,0,0,0.5); animation: float 3s infinite; margin: 0; }
 
         .btn-container { display: flex; gap: 15px; margin-top: 40px; flex-wrap: wrap; justify-content: center; }
         .glass-btn { background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border: 3px solid white; padding: 18px 30px; border-radius: 60px; color: white; font-weight: 900; font-size: 1.1rem; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
 
         .section { display: none; padding: 20px; animation: slideUp 0.4s ease; }
         .active { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         /* CALCULATOR */
         .elve-container { background: white; border-radius: 35px; padding: 25px; max-width: 500px; margin: 0 auto 25px; box-shadow: 0 20px 50px rgba(247,37,133,0.15); text-align: center; }
+        #profit-text { font-size: 1.5rem; font-weight: 900; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        
         .trade-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: white; padding: 15px; border-radius: 30px; border: 5px solid var(--bg-rose); margin-bottom: 20px; }
         .slot { width: 85px; height: 85px; background: #fafafa; border: 2px solid #eee; border-radius: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; }
         .slot img { width: 85%; height: 85%; object-fit: contain; }
-        .slot-label { position: absolute; bottom: 4px; right: 4px; font-size: 0.6rem; font-weight: 900; color: white; background: var(--accent); padding: 2px 5px; border-radius: 5px; z-index: 5; }
-        
-        /* LA CROIX POUR ENLEVER */
+        .slot-label { position: absolute; bottom: 4px; right: 4px; font-size: 0.6rem; font-weight: 900; color: white; background: var(--accent); padding: 2px 5px; border-radius: 5px; }
         .remove-btn { position: absolute; top: 2px; right: 2px; width: 20px; height: 20px; background: #ff4d4d; color: white; border-radius: 50%; display: none; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; z-index: 10; border: 2px solid white; }
         .has-pet .remove-btn { display: flex; }
 
-        /* VALUE LIST CARDS */
+        /* VALUE LIST */
         .pet-card { background: white; border-radius: 25px; padding: 15px; text-align: center; transition: 0.3s; position: relative; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
         .rarity-header { position: absolute; top: 0; left: 0; width: 100%; height: 50px; opacity: 0.15; z-index: 1; border-radius: 0 0 50% 50%; }
-        .pet-card img { width: 80px; height: 80px; object-fit: contain; position: relative; z-index: 2; }
+        .pet-card img { width: 75px; height: 75px; object-fit: contain; position: relative; z-index: 2; }
+        .status-badge { font-size: 0.65rem; font-weight: 900; padding: 3px 8px; border-radius: 10px; display: inline-block; margin-top: 5px; }
+        .rise { background: #e6fffa; color: #38b2ac; }
+        .loss { background: #fff5f5; color: #e53e3e; }
 
-        /* PICKER MODAL */
+        /* PICKER */
         #picker { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; width:92%; max-width: 500px; height:85vh; z-index:3000; border-radius:40px; padding:20px; box-shadow: 0 0 100px rgba(0,0,0,0.5); flex-direction: column; }
         .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index:2999; }
         .tab-row { display: flex; gap: 5px; margin-bottom: 10px; overflow-x: auto; padding-bottom: 5px; }
-        .tab-btn { padding: 10px 15px; border-radius: 12px; border: none; background: #f0f0f0; font-weight: 900; font-size: 0.7rem; cursor: pointer; white-space: nowrap; }
+        .tab-btn { padding: 10px 15px; border-radius: 12px; border: none; background: #f0f0f0; font-weight: 900; font-size: 0.65rem; cursor: pointer; white-space: nowrap; }
         .tab-btn.active { background: var(--accent); color: white; }
-        .m-btn { flex: 1; padding: 12px; border-radius: 15px; border: 2px solid #eee; background: white; font-weight: 900; cursor: pointer; font-size: 0.8rem; }
+        .m-btn { flex: 1; padding: 12px; border-radius: 15px; border: 2px solid #eee; background: white; font-weight: 900; cursor: pointer; }
         .m-btn.active { background: #333; color: white; border-color: #333; }
         #pet-options { flex: 1; overflow-y: auto; }
-        .pet-choice { display: flex; align-items: center; gap: 15px; padding: 12px; border-bottom: 1px solid #f5f5f5; cursor: pointer; }
+        .pet-choice { display: flex; align-items: center; gap: 12px; padding: 10px; border-bottom: 1px solid #f5f5f5; cursor: pointer; }
         input[type="text"] { width: 100%; padding: 15px; border-radius: 15px; border: 2px solid #eee; margin-bottom: 10px; font-family: 'Outfit'; outline: none; box-sizing: border-box; }
     </style>
 </head>
@@ -76,6 +81,7 @@
             <div style="display:flex; justify-content:center; gap:30px; font-weight:900; color:#ccc;">WIN / FAIR / LOSE</div>
             <div style="display:flex; justify-content:space-between; font-size:3rem; font-weight:900; margin:10px 0;"><span id="v-you">0</span> <span id="v-them" style="color:var(--accent)">0</span></div>
             <div style="height:12px; background:#f0f0f0; border-radius:10px; overflow:hidden;"><div id="fill" style="height:100%; width:50%; background:var(--accent); transition:0.8s;"></div></div>
+            <div id="profit-text">START A TRADE</div>
         </div>
         <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
             <div><h4 style="text-align:center">YOU</h4><div class="trade-grid" id="grid-you"></div></div>
@@ -101,6 +107,8 @@
             <button class="tab-btn" onclick="setTab('legendary', this)">LÉGEND.</button>
             <button class="tab-btn" onclick="setTab('ultra', this)">ULTRA</button>
             <button class="tab-btn" onclick="setTab('rare', this)">RARE</button>
+            <button class="tab-btn" onclick="setTab('uncommon', this)">UNCO.</button>
+            <button class="tab-btn" onclick="setTab('common', this)">COMMON</button>
             <button class="tab-btn" onclick="setTab('item', this)">ITEMS 🎁</button>
         </div>
         <input type="text" id="search" placeholder="Chercher..." onkeyup="filterPets()">
@@ -108,24 +116,39 @@
     </div>
 
     <script>
-        // LA DATABASE RESTE LA MÊME
+        // DATABASE AVEC SYSTÈME OLD VALUE
+        // v = valeur actuelle, oldV = ancienne valeur pour afficher rise/loss
         const pets = [
-            { n: "Bat Dragon", v: 630, r: "legendary" }, { n: "Shadow Dragon", v: 550, r: "legendary" },
-            { n: "Giraffe", v: 230, r: "legendary" }, { n: "Frost Dragon", v: 195, r: "legendary" },
-            { n: "Owl", v: 175, r: "legendary" }, { n: "Parrot", v: 140, r: "legendary" },
-            { n: "Evil Unicorn", v: 99, r: "legendary" }, { n: "Crow", v: 110, r: "legendary" },
-            { n: "Blazing Lion", v: 55, r: "legendary" }, { n: "Arctic Reindeer", v: 40, r: "legendary" },
-            { n: "Albino Monkey", v: 20, r: "legendary" }, { n: "Turtle", v: 26, r: "legendary" },
-            { n: "Kangaroo", v: 23, r: "legendary" }, { n: "Cryptid", v: 67, r: "legendary" },
-            { n: "SSBD", v: 28, r: "legendary" }, { n: "Nessie", v: 10, r: "legendary" },
-            { n: "Frost Unicorn", v: 18.5, r: "legendary" }, { n: "Vampire Dragon", v: 7.5, r: "legendary" },
-            { n: "Unicorn", v: 4.5, r: "legendary" }, { n: "Dragon", v: 1.5, r: "legendary" },
-            { n: "Hedgehog", v: 45.5, r: "ultra" }, { n: "Blue Dog", v: 28, r: "ultra" },
-            { n: "Dalmatian", v: 39.5, r: "ultra" }, { n: "Flamingo", v: 25.5, r: "ultra" },
-            { n: "Lion", v: 14.5, r: "ultra" }, { n: "Cow", v: 27.0, r: "rare" },
-            { n: "Elephant", v: 17.5, r: "rare" }, { n: "Hyena", v: 7.5, r: "rare" },
-            { n: "Fly Potion", v: 2.5, r: "item" }, { n: "Ride Potion", v: 2.0, r: "item" },
-            { n: "Candy Cannon", v: 135, r: "item" }, { n: "Tombstone", v: 55, r: "item" }
+            // LEGENDARY
+            { n: "Bat Dragon", v: 1000, oldV: 1000, r: "legendary" },
+            { n: "Shadow Dragon", v: 850, oldV: 850, r: "legendary" },
+            { n: "Giraffe", v: 520, oldV: 520, r: "legendary" },
+            { n: "Frost Dragon", v: 415, oldV: 415, r: "legendary" },
+            { n: "Owl", v: 265, oldV: 265, r: "legendary" },
+            { n: "Parrot", v: 215, oldV: 210, r: "legendary" }, // Exemple RISE
+            { n: "Cryptid", v: 45, oldV: 70, r: "legendary" }, // Exemple LOSS
+            { n: "Caelum Cervi", v: 9.5, oldV: 9.5, r: "legendary" },
+            { n: "Diamond Butterfly", v: 11, oldV: 10, r: "legendary" },
+            { n: "Mechapup", v: 5.5, oldV: 5.5, r: "legendary" },
+            
+            // ULTRA-RARE
+            { n: "Hedgehog", v: 38.5, oldV: 38.5, r: "ultra" },
+            { n: "Dalmatian", v: 18.5, oldV: 18.5, r: "ultra" },
+            { n: "Puffin", v: 4.5, oldV: 3.5, r: "ultra" },
+            
+            // UNCOMMON & COMMON (Nouveaux)
+            { n: "Blue Dog", v: 28, oldV: 28, r: "uncommon" },
+            { n: "Pink Cat", v: 12, oldV: 10, r: "uncommon" },
+            { n: "Wild Boar", v: 4.5, oldV: 4.5, r: "uncommon" },
+            { n: "Chicken", v: 3.5, oldV: 3.5, r: "common" },
+            { n: "Dog", v: 0.1, oldV: 0.1, r: "common" },
+            { n: "Cat", v: 0.1, oldV: 0.1, r: "common" },
+            { n: "Otter", v: 0.2, oldV: 0.2, r: "common" },
+
+            // ITEMS
+            { n: "Fly Potion", v: 1.5, oldV: 1.5, r: "item" },
+            { n: "Ride Potion", v: 1.0, oldV: 1.0, r: "item" },
+            { n: "Candy Cannon", v: 165, oldV: 160, r: "item" }
         ];
 
         let curSide, curSlot, curM = 'reg', curTab = 'all';
@@ -155,8 +178,8 @@
             pets.filter(p => curTab === 'all' || p.r === curTab).forEach(p => {
                 const img = `https://adoptme.fandom.com/wiki/Special:FilePath/${p.n.replace(/ /g, "_")}.png?width=100`;
                 opt.innerHTML += `<div class="pet-choice" onclick="select('${p.n}', ${p.v}, '${img}', '${p.r}')">
-                    <img src="${img}" style="width:40px; height:40px; object-fit:contain;" onerror="this.src='https://via.placeholder.com/40'">
-                    <div style="flex:1"><b>${p.n}</b><br><small style="color:#999">${p.r.toUpperCase()}</small></div>
+                    <img src="${img}" style="width:35px; height:35px; object-fit:contain;" onerror="this.src='https://via.placeholder.com/35'">
+                    <div style="flex:1"><b>${p.n}</b></div>
                     <b style="color:var(--accent)">${p.v}</b>
                 </div>`;
             });
@@ -177,36 +200,54 @@
             update(); closePicker();
         }
 
-        // FONCTION POUR ENLEVER LE PET
         function removePet(event, side, slot) {
-            event.stopPropagation(); // Empêche d'ouvrir le picker en cliquant sur la croix
+            event.stopPropagation();
             const id = side === 'you' ? `sy-${slot}` : `st-${slot}`;
             const slotEl = document.getElementById(id);
             slotEl.classList.remove('has-pet');
             slotEl.innerHTML = "+";
             if(side === 'you') dYou[slot] = 0; else dThem[slot] = 0;
-            update();
-            playPop();
+            update(); playPop();
         }
 
         function update() {
             const sY = dYou.reduce((a,b)=>a+b,0), sT = dThem.reduce((a,b)=>a+b,0);
             document.getElementById('v-you').innerText = sY.toFixed(1);
             document.getElementById('v-them').innerText = sT.toFixed(1);
-            const total = sY + sT;
-            document.getElementById('fill').style.width = (total === 0) ? "50%" : (sY / total * 100) + "%";
+            
+            const fill = document.getElementById('fill');
+            const prof = document.getElementById('profit-text');
+            
+            if(sY === 0 && sT === 0) {
+                fill.style.width = "50%"; prof.innerText = "START A TRADE"; prof.style.color = "#ccc";
+            } else {
+                const ratio = sT / sY;
+                const perc = (sY / (sY + sT)) * 100;
+                fill.style.width = perc + "%";
+                
+                if(ratio >= 1.2) { prof.innerText = "BIG WIN 🤑"; prof.style.color = "#48bb78"; }
+                else if(ratio >= 1.05) { prof.innerText = "WIN ✅"; prof.style.color = "#81e6d9"; }
+                else if(ratio >= 0.95) { prof.innerText = "FAIR 🤝"; prof.style.color = "#ecc94b"; }
+                else if(ratio >= 0.8) { prof.innerText = "LOSE ❌"; prof.style.color = "#f56565"; }
+                else { prof.innerText = "BIG LOSE 💀"; prof.style.color = "#742a2a"; }
+            }
         }
 
         function renderList() {
             const cont = document.getElementById('full-list'); cont.innerHTML = "";
             pets.sort((a,b) => b.v - a.v).forEach(p => {
                 const img = `https://adoptme.fandom.com/wiki/Special:FilePath/${p.n.replace(/ /g, "_")}.png?width=100`;
+                let statusHtml = "";
+                if(p.v > p.oldV) statusHtml = `<div class="status-badge rise">RISING 🔥 (was ${p.oldV})</div>`;
+                else if(p.v < p.oldV) statusHtml = `<div class="status-badge loss">LOSING 📉 (was ${p.oldV})</div>`;
+
                 cont.innerHTML += `
                 <div class="pet-card">
                     <div class="rarity-header" style="background:var(--${p.r})"></div>
                     <img src="${img}" onerror="this.src='https://via.placeholder.com/60'">
                     <div style="font-weight:900; font-size:0.8rem; position:relative; z-index:2;">${p.n}</div>
                     <div style="color:var(--accent); font-weight:900; position:relative; z-index:2;">${p.v}</div>
+                    ${statusHtml}
                 </div>`;
             });
         }
@@ -218,13 +259,13 @@
         }
 
         function init() {
-            const gy = document.getElementById('grid-you'), gt = document.getElementById('grid-them');
             for(let i=0; i<9; i++) {
-                gy.innerHTML += `<div class="slot" onclick="openPicker('you', ${i})" id="sy-${i}">+</div>`;
-                gt.innerHTML += `<div class="slot" onclick="openPicker('them', ${i})" id="st-${i}">+</div>`;
+                document.getElementById('grid-you').innerHTML += `<div class="slot" onclick="openPicker('you', ${i})" id="sy-${i}">+</div>`;
+                document.getElementById('grid-them').innerHTML += `<div class="slot" onclick="openPicker('them', ${i})" id="st-${i}">+</div>`;
             }
         }
         init();
     </script>
 </body>
-</html>
+                </html>
+                
