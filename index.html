@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FairyValue 🧚 - Full Database</title>
+    <title>FairyValue 🧚 - Mega Database Update</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -29,7 +29,7 @@
         .slot { width: 80px; height: 80px; background: white; border: 2px solid var(--slot-border); border-radius: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: 0.2s; }
         .slot img { width: 85%; height: 85%; object-fit: contain; }
         .slot-label { position: absolute; bottom: 2px; right: 4px; font-size: 0.6rem; font-weight: 900; color: var(--accent); background: rgba(255,255,255,0.8); padding: 1px 3px; border-radius: 4px; }
-        #picker { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; width:95%; max-width:550px; height:85vh; z-index:2000; border-radius:35px; padding:25px; box-shadow: 0 0 60px rgba(0,0,0,0.3); overflow-y: auto; }
+        #picker { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; width:95%; max-width: 550px; height:85vh; z-index:2000; border-radius:35px; padding:25px; box-shadow: 0 0 60px rgba(0,0,0,0.3); overflow-y: auto; }
         .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index:1999; }
         .modifier-row { display: flex; justify-content: space-around; background: #fdf0f3; padding: 12px; border-radius: 20px; margin-bottom: 15px; }
         .mod-btn { cursor: pointer; padding: 8px 15px; border-radius: 12px; border: 2px solid #ffccd5; background: white; font-weight: bold; font-size: 0.85rem; }
@@ -65,7 +65,7 @@
 
     <div id="list-page" class="section">
         <button onclick="showPage('home-page')" style="background:none; border:none; color:var(--accent); font-weight:900; cursor:pointer;">← RETOUR</button>
-        <h2 style="text-align:center; color:var(--accent);">TOUS LES PETS 📊</h2>
+        <h2 style="text-align:center; color:var(--accent);">BASE DE DONNÉES COMPLÈTE 📊</h2>
         <div id="full-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap:15px;"></div>
     </div>
 
@@ -86,58 +86,74 @@
 
     <script>
         const pets = [
-            // HIGH TIERS
-            { n: "Shadow Dragon", v: 1000, i: "Shadow_Dragon.png", r: "legendary" },
-            { n: "Bat Dragon", v: 865, i: "Bat_Dragon.png", r: "legendary" },
-            { n: "Giraffe", v: 520, i: "Giraffe.png", r: "legendary" },
-            { n: "Frost Dragon", v: 415, i: "Frost_Dragon.png", r: "legendary" },
-            { n: "Owl", v: 265, i: "Owl.png", r: "legendary" },
-            { n: "Parrot", v: 215, i: "Parrot.png", r: "legendary" },
-            { n: "Evil Unicorn", v: 165, i: "Evil_Unicorn.png", r: "legendary" },
-            { n: "Crow", v: 155, i: "Crow.png", r: "legendary" },
-            // TENDANCES ET NOUVEAUTES
-            { n: "Frost Unicorn", v: 12, i: "Frost_Unicorn.png", r: "legendary" },
-            { n: "Midnight Dragon", v: 8.5, i: "Midnight_Dragon.png", r: "legendary" },
-            { n: "Vampire Dragon", v: 7, i: "Vampire_Dragon.png", r: "legendary" },
-            { n: "Lava Dragon", v: 5.5, i: "Lava_Dragon.png", r: "legendary" },
-            { n: "Dancing Dragon", v: 4.5, i: "Dancing_Dragon.png", r: "legendary" },
-            { n: "Undead Jousting Horse", v: 11, i: "Undead_Jousting_Horse.png", r: "legendary" },
-            // LEGENDARY CLASSIQUES
-            { n: "Arctic Reindeer", v: 45, i: "Arctic_Reindeer.png", r: "legendary" },
-            { n: "Albino Monkey", v: 24, i: "Albino_Monkey.png", r: "legendary" },
-            { n: "Turtle", v: 21, i: "Turtle.png", r: "legendary" },
-            { n: "Kangaroo", v: 18, i: "Kangaroo.png", r: "legendary" },
-            { n: "Unicorn", v: 2.5, i: "Unicorn.png", r: "legendary" },
-            { n: "Dragon", v: 1.5, i: "Dragon.png", r: "legendary" },
-            { n: "Phoenix", v: 2.8, i: "Phoenix.png", r: "legendary" },
-            { n: "T-Rex", v: 3, i: "T-Rex.png", r: "legendary" },
-            { n: "Dodo", v: 2.5, i: "Dodo.png", r: "legendary" },
-            { n: "Shark", v: 2.2, i: "Shark.png", r: "legendary" },
-            { n: "Octopus", v: 2.2, i: "Octopus.png", r: "legendary" },
-            { n: "Goldhorn", v: 2.1, i: "Goldhorn.png", r: "legendary" },
-            // EXOTIQUES
-            { n: "African Wild Dog", v: 12, i: "African_Wild_Dog.png", r: "ultra" },
-            { n: "Hedgehog", v: 35, i: "Hedgehog.png", r: "ultra" },
-            { n: "Dalmatian", v: 15, i: "Dalmatian.png", r: "ultra" },
-            { n: "Flamingo", v: 12.5, i: "Flamingo.png", r: "ultra" },
-            { n: "Lion", v: 9, i: "Lion.png", r: "ultra" },
-            { n: "Nessie", v: 5.5, i: "Nessie.png", r: "ultra" },
-            { n: "Tortuga de la Isla", v: 6.5, i: "Tortuga_de_la_Isla.png", r: "ultra" },
-            { n: "Pelican", v: 9.5, i: "Pelican.png", r: "ultra" },
-            { n: "Cow", v: 16.5, i: "Cow.png", r: "rare" },
-            { n: "Pink Cat", v: 7, i: "Pink_Cat.png", r: "uncommon" },
-            { n: "Blue Dog", v: 12, i: "Blue_Dog.png", r: "uncommon" },
-            // EGGS
-            { n: "Blue Egg", v: 130, i: "Blue_Egg.png", r: "legendary" },
-            { n: "Pink Egg", v: 110, i: "Pink_Egg.png", r: "legendary" },
-            { n: "Safari Egg", v: 95, i: "Safari_Egg.png", r: "legendary" },
-            { n: "Jungle Egg", v: 65, i: "Jungle_Egg.png", r: "legendary" },
-            { n: "Farm Egg", v: 40, i: "Farm_Egg.png", r: "legendary" },
-            { n: "Christmas Egg", v: 18, i: "Christmas_Egg.png", r: "legendary" },
-            { n: "Aussie Egg", v: 3.5, i: "Aussie_Egg.png", r: "legendary" },
-            { n: "Fossil Egg", v: 2.5, i: "Fossil_Egg.png", r: "legendary" },
-            { n: "Ocean Egg", v: 1.5, i: "Ocean_Egg.png", r: "legendary" }
-            // ... (J'ajouterai les autres par vagues !)
+            // --- HIGH TIERS ---
+            { n: "Shadow Dragon", v: 1000, i: "Shadow_Dragon", r: "legendary" },
+            { n: "Bat Dragon", v: 865, i: "Bat_Dragon", r: "legendary" },
+            { n: "Frost Dragon", v: 415, i: "Frost_Dragon", r: "legendary" },
+            { n: "Giraffe", v: 520, i: "Giraffe", r: "legendary" },
+            { n: "Owl", v: 265, i: "Owl", r: "legendary" },
+            { n: "Parrot", v: 215, i: "Parrot", r: "legendary" },
+            { n: "Evil Unicorn", v: 165, i: "Evil_Unicorn", r: "legendary" },
+            { n: "Crow", v: 155, i: "Crow", r: "legendary" },
+            { n: "Blazing Lion", v: 145, i: "Blazing_Lion", r: "legendary" },
+
+            // --- DESERT EGG UPDATE ---
+            { n: "Cripple Beetle", v: 2.2, i: "Cripple_Beetle", r: "ultra" },
+            { n: "Desert Egg", v: 1.5, i: "Desert_Egg", r: "legendary" },
+            { n: "Cactus Friend", v: 3.5, i: "Cactus_Friend", r: "legendary" },
+            { n: "Singularity Beetle", v: 2.5, i: "Singularity_Beetle", r: "ultra" },
+            { n: "Royal Desert Egg", v: 2.0, i: "Royal_Desert_Egg", r: "legendary" },
+
+            // --- NOEL & WINTER ---
+            { n: "Peppermint Penguin", v: 11.5, i: "Peppermint_Penguin", r: "ultra" },
+            { n: "Snow Monkey", v: 2.5, i: "Snow_Monkey", r: "ultra" },
+            { n: "Ice Golem", v: 4.5, i: "Ice_Golem", r: "legendary" },
+            { n: "Snow Owl", v: 2.8, i: "Snow_Owl", r: "legendary" },
+            { n: "Candy Cane Snail", v: 3.0, i: "Candy_Cane_Snail", r: "ultra" },
+            { n: "Frost Fury", v: 6.0, i: "Frost_Fury", r: "legendary" },
+
+            // --- LÉGENDAIRES ---
+            { n: "Albino Monkey", v: 24, i: "Albino_Monkey", r: "legendary" },
+            { n: "Ancient Dragon", v: 2.5, i: "Ancient_Dragon", r: "legendary" },
+            { n: "Alicorn", v: 2.2, i: "Alicorn", r: "legendary" },
+            { n: "Axolotl", v: 2, i: "Axolotl", r: "legendary" },
+            { n: "Balloon Unicorn", v: 14.5, i: "Balloon_Unicorn", r: "legendary" },
+            { n: "Baku", v: 1.8, i: "Baku", r: "legendary" },
+            { n: "Cerberus", v: 2, i: "Cerberus", r: "legendary" },
+            { n: "Chameleon", v: 3, i: "Chameleon", r: "legendary" },
+            { n: "Chimera", v: 1.5, i: "Chimera", r: "legendary" },
+            { n: "Cobra", v: 1.5, i: "Cobra", r: "legendary" },
+            { n: "Dancing Dragon", v: 4.5, i: "Dancing_Dragon", r: "legendary" },
+            { n: "Diamond Butterfly", v: 40, i: "Diamond_Butterfly", r: "legendary" },
+            { n: "Dodo", v: 2.5, i: "Dodo", r: "legendary" },
+            { n: "Dragon", v: 1.5, i: "Dragon", r: "legendary" },
+            { n: "Goldhorn", v: 2.2, i: "Goldhorn", r: "legendary" },
+            { n: "Kangaroo", v: 18.5, i: "Kangaroo", r: "legendary" },
+            { n: "Lava Dragon", v: 5.5, i: "Lava_Dragon", r: "legendary" },
+            { n: "Phoenix", v: 2.8, i: "Phoenix", r: "legendary" },
+            { n: "Shark", v: 2.2, i: "Shark", r: "legendary" },
+            { n: "Squid", v: 3.5, i: "Squid", r: "legendary" },
+            { n: "T-Rex", v: 3, i: "T-Rex", r: "legendary" },
+            { n: "Turtle", v: 21, i: "Turtle", r: "legendary" },
+            { n: "Unicorn", v: 2.5, i: "Unicorn", r: "legendary" },
+
+            // --- EXOTIQUES & ULTRA-RARES ---
+            { n: "African Wild Dog", v: 12.5, i: "African_Wild_Dog", r: "ultra" },
+            { n: "Bush Elephant", v: 3.8, i: "Bush_Elephant", r: "ultra" },
+            { n: "Caterpillar", v: 8, i: "Caterpillar", r: "ultra" },
+            { n: "Giant Panda", v: 3, i: "Giant_Panda", r: "ultra" },
+            { n: "Goat", v: 6.5, i: "Goat", r: "ultra" },
+            { n: "Jellyfish", v: 4.5, i: "Jellyfish", r: "ultra" },
+            { n: "Mini Pig", v: 4.2, i: "Mini_Pig", r: "ultra" },
+            { n: "Pelican", v: 9.5, i: "Pelican", r: "ultra" },
+            { n: "Tortuga de la Isla", v: 6.5, i: "Tortuga_de_la_Isla", r: "ultra" },
+            { n: "Dango", v: 1.8, i: "Dango", r: "ultra" },
+
+            // --- EGGS ---
+            { n: "Blue Egg", v: 130, i: "Blue_Egg", r: "legendary" },
+            { n: "Safari Egg", v: 95, i: "Safari_Egg", r: "legendary" },
+            { n: "Farm Egg", v: 42, i: "Farm_Egg", r: "legendary" },
+            { n: "Aussie Egg", v: 3.5, i: "Aussie_Egg", r: "legendary" }
         ];
 
         let curSide = 'you', curSlot = 0, curMod = 'normal';
@@ -163,13 +179,17 @@
             renderOptions();
         }
 
+        function getImgUrl(name) {
+            return `https://adoptme.fandom.com/wiki/Special:FilePath/${name}.png?width=200`;
+        }
+
         function renderOptions() {
             const opt = document.getElementById('pet-options');
             opt.innerHTML = "";
             pets.sort((a,b) => b.v - a.v).forEach(p => {
-                const img = `https://adoptme.fandom.com/wiki/Special:FilePath/${p.i}?width=100`;
+                const img = getImgUrl(p.i);
                 opt.innerHTML += `<div class="pet-option" onclick="selectPet('${p.n}', ${p.v}, '${img}')">
-                    <img src="${img}">
+                    <img src="${img}" onerror="this.src='https://via.placeholder.com/55?text=?'">
                     <div style="flex:1"><b>${p.n}</b><br><span class="rarity-tag" style="background:var(--${p.r})">${p.r}</span></div>
                     <b style="color:var(--accent)">${p.v}</b>
                 </div>`;
@@ -193,12 +213,13 @@
             document.getElementById('v-you').innerText = sY.toFixed(1);
             document.getElementById('v-them').innerText = sT.toFixed(1);
             const total = sY + sT;
-            document.getElementById('fill').style.width = total === 0 ? "50%" : (sY / total * 100) + "%";
+            const fill = document.getElementById('fill');
+            fill.style.width = total === 0 ? "50%" : (sY / total * 100) + "%";
             const diff = sT - sY;
             ['l-win', 'l-fair', 'l-lose'].forEach(l => document.getElementById(l).style.color = "#ddd");
             if(total > 0) {
-                if(diff > 10) document.getElementById('l-win').style.color = "#2ecc71";
-                else if(diff < -10) document.getElementById('l-lose').style.color = "#ff5e5e";
+                if(diff > 5) document.getElementById('l-win').style.color = "#2ecc71";
+                else if(diff < -5) document.getElementById('l-lose').style.color = "#ff5e5e";
                 else document.getElementById('l-fair').style.color = "#f1c40f";
             }
         }
@@ -207,9 +228,9 @@
             const container = document.getElementById('full-list');
             container.innerHTML = "";
             pets.forEach(p => {
-                const img = `https://adoptme.fandom.com/wiki/Special:FilePath/${p.i}?width=150`;
+                const img = getImgUrl(p.i);
                 container.innerHTML += `<div style="background:white; padding:15px; border-radius:20px; text-align:center; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
-                    <img src="${img}" style="width:70px; height:70px; object-fit:contain;"><br>
+                    <img src="${img}" style="width:70px; height:70px; object-fit:contain;" onerror="this.src='https://via.placeholder.com/70?text=?'"><br>
                     <span class="rarity-tag" style="background:var(--${p.r})">${p.r}</span><br>
                     <b>${p.n}</b><br><span style="color:var(--accent); font-weight:900;">${p.v}</span>
                 </div>`;
@@ -222,6 +243,7 @@
         }
 
         function closePicker() { document.getElementById('picker').style.display='none'; document.getElementById('overlay').style.display='none'; }
+        
         function init() {
             const gy = document.getElementById('grid-you'), gt = document.getElementById('grid-them');
             for(let i=0; i<9; i++) {
