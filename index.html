@@ -3,150 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FairyValue 🧚 - Mega Update</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>FairyValue 🧚 - Edition Royale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #ff85a2; --accent: #f72585; --bg-rose: #ffe5ec; --slot-border: #ffb3c1;
-            --legendary: #ffac33; --ultra: #ff66cc; --rare: #33ccff; --uncommon: #66ff66; --common: #b3b3b3;
-            --exotic: #9d4edd;
+            --legendary: linear-gradient(135deg, #ffcc33 0%, #ffab1a 100%);
+            --ultra: linear-gradient(135deg, #ff85e1 0%, #f72585 100%);
+            --rare: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
+            --uncommon: linear-gradient(135deg, #b5e48c 0%, #76c893 100%);
+            --common: linear-gradient(135deg, #dee2e6 0%, #adb5bd 100%);
+            --exotic: linear-gradient(135deg, #b79ced 0%, #7209b7 100%);
         }
-        body, html { margin: 0; padding: 0; font-family: 'Outfit', sans-serif; min-height: 100vh; color: #333; background: #fff5f7; }
         
+        body, html { margin: 0; padding: 0; font-family: 'Outfit', sans-serif; min-height: 100vh; background: #fff5f7; color: #333; overflow-x: hidden; }
+        
+        /* HOME PAGE ATTRACTIVE */
         #home-page {
-            height: 100vh; background: linear-gradient(rgba(255, 133, 162, 0.4), rgba(0,0,0,0.6)), url('https://wallpapers.com/images/hd/adopt-me-background-r2fa0g7qap0177br.jpg');
-            background-size: cover; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white;
+            height: 100vh; background: linear-gradient(rgba(255, 133, 162, 0.3), rgba(0,0,0,0.7)), url('https://wallpapers.com/images/hd/adopt-me-background-r2fa0g7qap0177br.jpg');
+            background-size: cover; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
         }
-        .hero-title { font-size: 4rem; font-weight: 900; text-shadow: 0 5px 20px rgba(0,0,0,0.4); margin: 0; }
-        .btn-container { display: flex; gap: 20px; margin-top: 30px; flex-wrap: wrap; justify-content: center; }
-        .glass-btn { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border: 2px solid white; padding: 18px 40px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
-        .glass-btn:hover { background: white; color: var(--primary); transform: scale(1.05); }
+        
+        .hero-title { 
+            font-size: 5.5rem; font-weight: 900; color: white;
+            text-shadow: 0 0 30px var(--accent), 0 10px 10px rgba(0,0,0,0.5);
+            animation: float 3s ease-in-out infinite; margin: 0;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        .section { display: none; padding: 20px; animation: fadeIn 0.4s; }
+        .btn-container { display: flex; gap: 20px; margin-top: 40px; }
+        .glass-btn { 
+            background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border: 3px solid white;
+            padding: 20px 45px; border-radius: 60px; color: white; font-weight: 900; font-size: 1.3rem;
+            cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .glass-btn:hover { background: white; color: var(--accent); transform: scale(1.1) rotate(-2deg); }
+
+        /* SECTIONS */
+        .section { display: none; padding: 30px; animation: slideUp 0.5s ease; }
         .active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        .elve-container { background: white; border-radius: 30px; padding: 20px; max-width: 500px; margin: 0 auto 20px; box-shadow: 0 15px 40px rgba(255,133,162,0.2); text-align: center; }
-        .elve-bar { height: 14px; background: #f0f0f0; border-radius: 10px; margin: 15px 0; overflow: hidden; display: flex; }
-        #fill { height: 100%; width: 50%; background: linear-gradient(to right, #ff944d, #ff5e5e); transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+        /* TRADE CALCULATOR (Design conservé, fond amélioré) */
+        .elve-container { background: white; border-radius: 40px; padding: 30px; max-width: 550px; margin: 0 auto 30px; box-shadow: 0 25px 60px rgba(247,37,133,0.2); text-align: center; }
+        .trade-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; background: white; padding: 20px; border-radius: 35px; border: 6px solid var(--bg-rose); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .slot { width: 95px; height: 95px; background: #fdfdfd; border: 3px solid #eee; border-radius: 25px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: 0.2s; }
+        .slot:hover { border-color: var(--accent); background: #fff0f5; }
+        .slot img { width: 80%; height: 80%; object-fit: contain; }
+        .slot-label { position: absolute; bottom: 5px; right: 5px; font-size: 0.7rem; font-weight: 900; color: white; background: var(--accent); padding: 3px 7px; border-radius: 8px; }
 
-        .trade-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: var(--bg-rose); padding: 15px; border-radius: 25px; border: 4px solid var(--slot-border); }
-        .slot { width: 80px; height: 80px; background: white; border: 2px solid var(--slot-border); border-radius: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: 0.2s; overflow: hidden; }
-        .slot img { width: 85%; height: 85%; object-fit: contain; }
-        .slot-label { position: absolute; bottom: 2px; right: 4px; font-size: 0.65rem; font-weight: 900; color: white; background: var(--accent); padding: 1px 4px; border-radius: 4px; z-index: 5; }
-
-        #picker { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; width:95%; max-width: 550px; height:85vh; z-index:2000; border-radius:35px; padding:25px; box-shadow: 0 0 60px rgba(0,0,0,0.3); overflow-y: auto; }
-        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index:1999; }
+        /* VALUE LIST STYLÉE */
+        .pet-card { 
+            background: white; border-radius: 30px; padding: 20px; text-align: center; 
+            transition: 0.3s; position: relative; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border: 2px solid transparent;
+        }
+        .pet-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .pet-card img { width: 100px; height: 100px; object-fit: contain; margin-bottom: 10px; z-index: 2; position: relative; }
         
-        .modifier-row { display: flex; justify-content: space-around; background: #fdf0f3; padding: 12px; border-radius: 20px; margin-bottom: 15px; }
-        .mod-btn { cursor: pointer; padding: 8px 15px; border-radius: 12px; border: 2px solid #ffccd5; background: white; font-weight: bold; font-size: 0.85rem; }
-        .mod-btn.selected { background: var(--accent); color: white; border-color: var(--accent); }
+        .rarity-bg { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 60px; 
+            opacity: 0.2; z-index: 1; border-radius: 0 0 50% 50%;
+        }
+
+        /* PICKER */
+        #picker { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; width:95%; max-width: 600px; height:80vh; z-index:2000; border-radius:45px; padding:35px; box-shadow: 0 0 100px rgba(0,0,0,0.5); overflow-y: auto; }
+        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index:1999; }
         
-        .pet-option { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #fff0f3; cursor: pointer; }
-        .pet-option img { width: 55px; height: 55px; object-fit: contain; margin-right: 15px; }
-        .rarity-tag { font-size: 0.65rem; font-weight: 900; color: white; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+        input[type="text"] { width: 100%; padding: 18px; border-radius: 25px; border: 3px solid #eee; font-family: 'Outfit'; font-weight: 600; font-size: 1.1rem; outline: none; transition: 0.3s; }
+        input[type="text"]:focus { border-color: var(--accent); }
     </style>
 </head>
 <body>
 
+    <audio id="sound-pop" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+    <audio id="sound-click" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+
     <div id="home-page">
         <h1 class="hero-title">FAIRYVALUE 🧚</h1>
         <div class="btn-container">
-            <button class="glass-btn" onclick="showPage('list-page')">VALUE LIST 📈📉</button>
-            <button class="glass-btn" onclick="showPage('calc-page')">WFL CALCULATOR ✨</button>
+            <button class="glass-btn" onclick="playSound('pop'); showPage('list-page')">VALEURS 📈</button>
+            <button class="glass-btn" onclick="playSound('pop'); showPage('calc-page')">TRADES ✨</button>
         </div>
     </div>
 
     <div id="calc-page" class="section">
-        <button onclick="showPage('home-page')" style="background:none; border:none; color:var(--accent); font-weight:900; cursor:pointer;">← RETOUR</button>
+        <button onclick="playSound('click'); showPage('home-page')" style="background:none; border:none; color:var(--accent); font-weight:900; cursor:pointer; font-size:1.2rem;">← RETOUR</button>
         <div class="elve-container">
-            <div style="display:flex; justify-content:center; gap:25px; font-weight:900; color:#ddd;"><span id="l-win">WIN</span> <span id="l-fair">FAIR</span> <span id="l-lose">LOSE</span></div>
-            <div style="display:flex; justify-content:space-between; font-size:2.8rem; font-weight:900; margin:10px 0;"><span id="v-you">0</span> <span id="v-them" style="color:var(--accent)">0</span></div>
-            <div class="elve-bar"><div id="fill"></div></div>
+            <div style="display:flex; justify-content:center; gap:40px; font-weight:900; color:#ccc; font-size:1.3rem;">
+                <span id="l-win">WIN</span> <span id="l-fair">FAIR</span> <span id="l-lose">LOSE</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:4rem; font-weight:900; margin:15px 0;">
+                <span id="v-you">0</span> <span id="v-them" style="color:var(--accent)">0</span>
+            </div>
+            <div style="height:18px; background:#f0f0f0; border-radius:20px; overflow:hidden;">
+                <div id="fill" style="height:100%; width:50%; background:var(--accent); transition:1s cubic-bezier(0.175, 0.885, 0.32, 1.275);"></div>
+            </div>
         </div>
-        <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
-            <div><h4 style="text-align:center;color:var(--primary)">YOU</h4><div class="trade-grid" id="grid-you"></div></div>
-            <div><h4 style="text-align:center;color:var(--accent)">THEM</h4><div class="trade-grid" id="grid-them"></div></div>
+        <div style="display:flex; justify-content:center; gap:40px; flex-wrap:wrap;">
+            <div><h3 style="text-align:center; color:var(--primary);">VOTRE OFFRE</h3><div class="trade-grid" id="grid-you"></div></div>
+            <div><h3 style="text-align:center; color:var(--accent);">LEUR OFFRE</h3><div class="trade-grid" id="grid-them"></div></div>
         </div>
-        <center><button onclick="location.reload()" style="margin-top:20px; padding:12px 40px; border-radius:50px; border:none; background:var(--accent); color:white; font-weight:bold; cursor:pointer;">RESET</button></center>
     </div>
 
     <div id="list-page" class="section">
-        <button onclick="showPage('home-page')" style="background:none; border:none; color:var(--accent); font-weight:900; cursor:pointer;">← RETOUR</button>
-        <h2 style="text-align:center; color:var(--accent);">BASE DE DONNÉES COMPLÈTE 📊</h2>
-        <div id="full-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap:15px;"></div>
+        <button onclick="playSound('click'); showPage('home-page')" style="background:none; border:none; color:var(--accent); font-weight:900; cursor:pointer; font-size:1.2rem;">← RETOUR</button>
+        <h2 style="text-align:center; font-size:3rem; margin-bottom:40px;">TOP PETS LIST 💎</h2>
+        <div id="full-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap:25px;"></div>
     </div>
 
     <div class="overlay" id="overlay" onclick="closePicker()"></div>
     <div id="picker">
-        <div class="modifier-row">
-            <div class="mod-btn" id="m-normal" onclick="setMod('normal')">Normal</div>
-            <div class="mod-btn" id="m-neon" onclick="setMod('neon')">Neon</div>
-            <div class="mod-btn" id="m-mega" onclick="setMod('mega')">Mega</div>
-        </div>
-        <div class="modifier-row" style="margin-top:-5px;">
-            <label><input type="checkbox" id="fly"> Fly</label>
-            <label><input type="checkbox" id="ride"> Ride</label>
-        </div>
-        <input type="text" id="search" placeholder="Chercher un pet..." onkeyup="filterPets()" style="width:100%; padding:12px; border-radius:15px; border:1px solid #eee; margin-bottom:15px; outline:none;">
-        <div id="pet-options"></div>
+        <input type="text" id="search" placeholder="Rechercher un pet..." onkeyup="filterPets()">
+        <div id="pet-options" style="margin-top:20px;"></div>
     </div>
 
     <script>
         const pets = [
-            // --- HIGH TIERS ---
-            { n: "Shadow Dragon", v: 1000, r: "legendary" },
-            { n: "Bat Dragon", v: 865, r: "legendary" },
+            { n: "Bat Dragon", v: 1000, r: "legendary" },
+            { n: "Shadow Dragon", v: 850, r: "legendary" },
             { n: "Giraffe", v: 520, r: "legendary" },
             { n: "Frost Dragon", v: 415, r: "legendary" },
-            { n: "Owl", v: 265, r: "legendary" },
-            { n: "Parrot", v: 215, r: "legendary" },
-            { n: "Evil Unicorn", v: 165, r: "legendary" },
-            { n: "Crow", v: 155, r: "legendary" },
-
-            // --- EXOTIQUES (EXO) ---
-            { n: "Balloon Unicorn", v: 14.5, r: "legendary", tag: "EXO" },
-            { n: "African Wild Dog", v: 12.5, r: "ultra", tag: "EXO" },
-            { n: "Peppermint Penguin", v: 11, r: "ultra", tag: "EXO" },
-            { n: "Pelican", v: 9.5, r: "ultra", tag: "EXO" },
-            { n: "Caterpillar", v: 8, r: "ultra", tag: "EXO" },
-            { n: "Giant Panda", v: 3.5, r: "ultra", tag: "EXO" },
-            { n: "Jellyfish", v: 4.0, r: "ultra", tag: "EXO" },
-
-            // --- NOUVEAUTÉS LÉGENDAIRES ---
+            { n: "Blazing Lion", v: 145.0, r: "legendary" },
+            { n: "Blue Egg", v: 130.0, r: "legendary" },
+            { n: "Jungle Egg", v: 95.0, r: "legendary" },
+            { n: "Pink Egg", v: 65.0, r: "legendary" },
+            { n: "Hedgehog", v: 38.5, r: "ultra" },
+            { n: "Dalmatian", v: 18.5, r: "ultra" },
+            { n: "Cow", v: 16.0, r: "rare" },
+            { n: "Cryptid", v: 12.0, r: "ultra", tag: "EXO" },
+            { n: "Diamond Butterfly", v: 10.5, r: "legendary" },
+            { n: "Caelum Cervi", v: 9.5, r: "legendary" },
             { n: "Dragonfruit Fox", v: 4.5, r: "legendary" },
-            { n: "Midnight Dragon", v: 6.2, r: "legendary" },
-            { n: "Ghost Dragon", v: 3.8, r: "legendary" },
-            { n: "Ice Wolf", v: 3.2, r: "legendary" },
-            { n: "Vampire Dragon", v: 5.5, r: "legendary" },
-            { n: "Dancing Dragon", v: 2.8, r: "legendary" },
-            { n: "Capricorn", v: 2.5, r: "legendary" },
-
-            // --- NOUVEAUTÉS ULTRA RARES ---
-            { n: "Dango Penguin", v: 1.8, r: "ultra" },
-            { n: "Many-Celled Dog", v: 1.2, r: "legendary" },
-            { n: "Alley Cat", v: 0.7, r: "ultra" },
-            { n: "Toasty Panda", v: 1.5, r: "ultra" },
-            { n: "Glacier Moth", v: 3.5, r: "ultra" },
-            { n: "Puffin", v: 2.8, r: "ultra" },
-
-            // --- LOW VALUE LEGS ---
-            { n: "Metal Ox", v: 0.4, r: "legendary" },
-            { n: "Minion Chick", v: 0.35, r: "legendary" },
-            { n: "Kitsune", v: 0.9, r: "legendary" },
-            { n: "Dragon", v: 0.8, r: "legendary" },
-            { n: "Cerberus", v: 1.1, r: "legendary" },
-
-            // --- CLASSICS ---
-            { n: "Turtle", v: 21, r: "legendary" },
-            { n: "Cow", v: 16, r: "rare" },
-            { n: "Poodle", v: 0.4, r: "uncommon" },
-            { n: "Dog", v: 0.1, r: "common" },
-            { n: "Cat", v: 0.1, r: "common" }
+            { n: "Rooster", v: 1.2, r: "rare" },
+            { n: "Purple Butterfly", v: 1.8, r: "ultra" }
         ];
 
-        let curSide = 'you', curSlot = 0, curMod = 'normal';
+        let curSide = 'you', curSlot = 0;
         let dataYou = Array(9).fill(0), dataThem = Array(9).fill(0);
+
+        function playSound(type) {
+            const s = document.getElementById('sound-' + type);
+            s.currentTime = 0; s.play();
+        }
 
         function showPage(id) {
             document.getElementById('home-page').style.display = (id === 'home-page') ? 'flex' : 'none';
@@ -156,18 +155,12 @@
         }
 
         function getImgUrl(name) {
-            const formatted = name.replace(/ /g, "_");
-            return `https://adoptme.fandom.com/wiki/Special:FilePath/${formatted}.png?width=150`;
-        }
-
-        function setMod(m) {
-            curMod = m;
-            document.querySelectorAll('.mod-btn').forEach(b => b.classList.remove('selected'));
-            document.getElementById('m-'+m).classList.add('selected');
+            let wikiName = name === "Cryptid" ? "Cryptid_Hound" : name.replace(/ /g, "_");
+            return `https://adoptme.fandom.com/wiki/Special:FilePath/${wikiName}.png?width=150`;
         }
 
         function openPicker(side, slot) {
-            curSide = side; curSlot = slot; setMod('normal');
+            playSound('click'); curSide = side; curSlot = slot;
             document.getElementById('picker').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
             renderOptions();
@@ -178,25 +171,20 @@
             opt.innerHTML = "";
             pets.sort((a,b) => b.v - a.v).forEach(p => {
                 const img = getImgUrl(p.n);
-                const tagStr = p.tag ? `<span style="background:var(--exotic); color:white; font-size:10px; padding:2px 5px; border-radius:4px; margin-left:5px;">${p.tag}</span>` : '';
-                opt.innerHTML += `<div class="pet-option" onclick="selectPet('${p.n}', ${p.v}, '${img}')">
-                    <img src="${img}" onerror="this.src='https://via.placeholder.com/55?text=Pet'">
-                    <div style="flex:1"><b>${p.n}</b> ${tagStr}<br><span class="rarity-tag" style="background:var(--${p.r})">${p.r}</span></div>
-                    <b style="color:var(--accent)">${p.v}</b>
-                </div>`;
+                opt.innerHTML += `
+                    <div class="slot" style="width:100%; height:auto; padding:10px; margin-bottom:10px; justify-content:flex-start; gap:20px;" onclick="selectPet('${p.n}', ${p.v}, '${img}')">
+                        <img src="${img}" style="width:50px; height:50px;">
+                        <div style="text-align:left"><b>${p.n}</b><br><small>${p.r}</small></div>
+                        <b style="margin-left:auto; color:var(--accent)">${p.v}</b>
+                    </div>`;
             });
         }
 
         function selectPet(name, val, img) {
-            let fVal = val; let label = "";
-            if(curMod === 'neon') { fVal *= 4; label = "N"; }
-            if(curMod === 'mega') { fVal *= 16; label = "M"; }
-            if(document.getElementById('fly').checked) { fVal += 1.5; label += "F"; }
-            if(document.getElementById('ride').checked) { fVal += 0.5; label += "R"; }
-            
+            playSound('pop');
             const id = curSide === 'you' ? `sy-${curSlot}` : `st-${curSlot}`;
-            document.getElementById(id).innerHTML = `<img src="${img}"><div class="slot-label">${label || 'Reg'}</div>`;
-            if(curSide === 'you') dataYou[curSlot] = fVal; else dataThem[curSlot] = fVal;
+            document.getElementById(id).innerHTML = `<img src="${img}"><div class="slot-label">REG</div>`;
+            if(curSide === 'you') dataYou[curSlot] = val; else dataThem[curSlot] = val;
             updateBar(); closePicker();
         }
 
@@ -205,16 +193,7 @@
             document.getElementById('v-you').innerText = sY.toFixed(1);
             document.getElementById('v-them').innerText = sT.toFixed(1);
             const total = sY + sT;
-            const fill = document.getElementById('fill');
-            fill.style.width = total === 0 ? "50%" : (sY / total * 100) + "%";
-            
-            const diff = sT - sY;
-            ['l-win', 'l-fair', 'l-lose'].forEach(l => document.getElementById(l).style.color = "#ddd");
-            if(total > 0) {
-                if(diff > 5) document.getElementById('l-win').style.color = "#2ecc71";
-                else if(diff < -5) document.getElementById('l-lose').style.color = "#ff5e5e";
-                else document.getElementById('l-fair').style.color = "#f1c40f";
-            }
+            document.getElementById('fill').style.width = total === 0 ? "50%" : (sY / total * 100) + "%";
         }
 
         function renderValueList() {
@@ -222,21 +201,24 @@
             container.innerHTML = "";
             pets.forEach(p => {
                 const img = getImgUrl(p.n);
-                container.innerHTML += `<div style="background:white; padding:15px; border-radius:20px; text-align:center; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
-                    <img src="${img}" style="width:70px; height:70px; object-fit:contain;" onerror="this.src='https://via.placeholder.com/70?text=Pet'"><br>
-                    <b>${p.n}</b><br><span class="rarity-tag" style="background:var(--${p.r})">${p.r}</span><br>
-                    <span style="color:var(--accent); font-weight:900;">${p.v}</span>
-                </div>`;
+                const rarityColor = `var(--${p.tag === 'EXO' ? 'exotic' : p.r})`;
+                container.innerHTML += `
+                    <div class="pet-card">
+                        <div class="rarity-bg" style="background:${rarityColor}"></div>
+                        <img src="${img}">
+                        <h4 style="margin:5px 0; color:#333;">${p.n}</h4>
+                        <div style="background:${rarityColor}; color:white; font-size:0.7rem; padding:3px 10px; border-radius:10px; display:inline-block; margin-bottom:10px;">${p.tag || p.r}</div>
+                        <div style="font-size:1.5rem; font-weight:900; color:var(--accent)">${p.v}</div>
+                    </div>`;
             });
         }
 
+        function closePicker() { document.getElementById('picker').style.display='none'; document.getElementById('overlay').style.display='none'; }
         function filterPets() {
             const s = document.getElementById('search').value.toLowerCase();
-            document.querySelectorAll('.pet-option').forEach(o => o.style.display = o.innerText.toLowerCase().includes(s) ? "flex" : "none");
+            document.querySelectorAll('#pet-options .slot').forEach(o => o.style.display = o.innerText.toLowerCase().includes(s) ? "flex" : "none");
         }
 
-        function closePicker() { document.getElementById('picker').style.display='none'; document.getElementById('overlay').style.display='none'; }
-        
         function init() {
             const gy = document.getElementById('grid-you'), gt = document.getElementById('grid-them');
             for(let i=0; i<9; i++) {
