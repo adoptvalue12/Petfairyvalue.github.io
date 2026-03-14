@@ -3,47 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FairyValue 🧚 - UNBREAKABLE EDITION</title>
+    <title>FairyValue 🧚 - Version Originale Complète</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #ff85a2; --accent: #f72585; --bg-rose: #ffe5ec; --slot-border: #ffb3c1;
             --legendary: #ffac33; --ultra: #ff66cc; --rare: #33ccff; --uncommon: #66ff66; --common: #b3b3b3;
         }
-        body, html { margin: 0; padding: 0; font-family: 'Outfit', sans-serif; min-height: 100vh; background: #fff5f7; color: #333; }
+        body, html { margin: 0; padding: 0; font-family: 'Outfit', sans-serif; min-height: 100vh; background: #fff5f7; }
         
         #home-page {
             height: 100vh; background: linear-gradient(rgba(255, 133, 162, 0.4), rgba(0,0,0,0.6)), url('https://wallpapers.com/images/hd/adopt-me-background-r2fa0g7qap0177br.jpg');
             background-size: cover; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white;
         }
-        .hero-title { font-size: clamp(3rem, 10vw, 5rem); font-weight: 900; text-shadow: 0 5px 20px rgba(0,0,0,0.4); }
-        .btn-container { display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
-        .glass-btn { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border: 3px solid white; padding: 15px 40px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
-        .glass-btn:hover { background: white; color: var(--accent); transform: scale(1.05); }
+        .hero-title { font-size: 4rem; font-weight: 900; text-shadow: 0 5px 20px rgba(0,0,0,0.4); margin: 0; }
+        .btn-container { display: flex; gap: 20px; margin-top: 30px; flex-wrap: wrap; justify-content: center; }
+        .glass-btn { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border: 2px solid white; padding: 18px 40px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
+        .glass-btn:hover { background: white; color: var(--primary); transform: scale(1.05); }
 
         .section { display: none; padding: 20px; animation: fadeIn 0.4s; }
         .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .elve-container { background: white; border-radius: 35px; padding: 25px; max-width: 550px; margin: 0 auto 30px; box-shadow: 0 15px 40px rgba(255,133,162,0.15); text-align: center; }
-        .elve-bar { height: 18px; background: #f0f0f0; border-radius: 20px; margin: 15px 0; overflow: hidden; display: flex; }
-        #fill { height: 100%; width: 50%; background: linear-gradient(to right, #ff944d, #f72585); transition: 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28); }
+        .elve-container { background: white; border-radius: 30px; padding: 20px; max-width: 500px; margin: 0 auto 20px; box-shadow: 0 15px 40px rgba(255,133,162,0.2); text-align: center; }
+        .elve-bar { height: 14px; background: #f0f0f0; border-radius: 10px; margin: 15px 0; overflow: hidden; display: flex; }
+        #fill { height: 100%; width: 50%; background: linear-gradient(to right, #ff944d, #ff5e5e); transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
 
         .trade-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: var(--bg-rose); padding: 15px; border-radius: 25px; border: 4px solid var(--slot-border); }
-        .slot { width: 85px; height: 85px; background: white; border: 2px solid var(--slot-border); border-radius: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; }
+        .slot { width: 85px; height: 85px; background: white; border: 2px solid var(--slot-border); border-radius: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: 0.2s; overflow: hidden; }
         .slot img { width: 85%; height: 85%; object-fit: contain; }
-        .slot-label { position: absolute; bottom: 3px; right: 5px; font-size: 0.65rem; font-weight: 900; color: white; background: var(--accent); padding: 1px 5px; border-radius: 5px; }
+        .slot-label { position: absolute; bottom: 2px; right: 4px; font-size: 0.65rem; font-weight: 900; color: white; background: var(--accent); padding: 1px 4px; border-radius: 4px; z-index: 5; }
 
-        #picker { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; width:95%; max-width: 550px; height:85vh; z-index:2000; border-radius:40px; padding:25px; box-shadow: 0 0 100px rgba(0,0,0,0.3); overflow-y: auto; }
+        #picker { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; width:95%; max-width: 550px; height:85vh; z-index:2000; border-radius:35px; padding:25px; box-shadow: 0 0 60px rgba(0,0,0,0.3); overflow-y: auto; }
         .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index:1999; }
-        
         .modifier-row { display: flex; justify-content: space-around; background: #fdf0f3; padding: 12px; border-radius: 20px; margin-bottom: 15px; }
-        .mod-btn { cursor: pointer; padding: 8px 18px; border-radius: 12px; border: 2px solid #ffccd5; background: white; font-weight: bold; }
+        .mod-btn { cursor: pointer; padding: 8px 15px; border-radius: 12px; border: 2px solid #ffccd5; background: white; font-weight: bold; }
         .mod-btn.selected { background: var(--accent); color: white; border-color: var(--accent); }
 
         .pet-option { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #fff0f3; cursor: pointer; }
-        .pet-option img { width: 55px; height: 55px; object-fit: contain; margin-right: 15px; border-radius: 10px; }
-        #search { width: 100%; padding: 15px; border-radius: 30px; border: 2px solid #eee; margin-bottom: 15px; outline: none; }
+        .pet-option img { width: 55px; height: 55px; object-fit: contain; margin-right: 15px; }
+        .rarity-tag { font-size: 0.65rem; font-weight: 900; color: white; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+        
+        #search { width: 100%; padding: 12px; border-radius: 15px; border: 1px solid #eee; margin-bottom: 15px; outline: none; }
     </style>
 </head>
 <body>
@@ -51,19 +52,17 @@
     <div id="home-page">
         <h1 class="hero-title">FAIRYVALUE 🧚</h1>
         <div class="btn-container">
-            <button class="glass-btn" onclick="showPage('list-page')">VALUE LIST 📈</button>
-            <button class="glass-btn" onclick="showPage('calc-page')">CALCULATOR ✨</button>
+            <button class="glass-btn" onclick="showPage('list-page')">VALUE LIST 📊</button>
+            <button class="glass-btn" onclick="showPage('calc-page')">WFL CALCULATOR ✨</button>
         </div>
     </div>
 
     <div id="calc-page" class="section">
         <button onclick="showPage('home-page')" style="background:none; border:none; color:var(--accent); font-weight:900; cursor:pointer;">← RETOUR</button>
         <div class="elve-container">
-            <div style="display:flex; justify-content:space-between; font-size:2.5rem; font-weight:900; margin-bottom:10px;">
-                <span id="v-you">0</span> <span id="v-them" style="color:var(--accent)">0</span>
-            </div>
+            <div style="display:flex; justify-content:space-between; font-size:2.8rem; font-weight:900; margin:10px 0;"><span id="v-you">0</span> <span id="v-them" style="color:var(--accent)">0</span></div>
             <div class="elve-bar"><div id="fill"></div></div>
-            <div style="font-weight:900; color:#ccc; letter-spacing: 2px;"><span id="status">FAIR</span></div>
+            <div style="font-weight:900; color:#ddd; letter-spacing:2px;">W F L</div>
         </div>
         <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
             <div class="trade-grid" id="grid-you"></div>
@@ -84,36 +83,30 @@
             <div class="mod-btn" id="m-neon" onclick="setMod('neon')">Neon</div>
             <div class="mod-btn" id="m-mega" onclick="setMod('mega')">Mega</div>
         </div>
-        <div class="modifier-row" style="background:none;">
-            <label style="cursor:pointer;"><input type="checkbox" id="fly"> Fly</label>
-            <label style="cursor:pointer; margin-left:15px;"><input type="checkbox" id="ride"> Ride</label>
+        <div class="modifier-row" style="margin-top:-5px; background:none;">
+            <label><input type="checkbox" id="fly"> Fly</label>
+            <label style="margin-left:15px;"><input type="checkbox" id="ride"> Ride</label>
         </div>
-        <input type="text" id="search" placeholder="Chercher un pet (Cow, Shadow, Panda...)" onkeyup="filterPets()">
+        <input type="text" id="search" placeholder="Chercher un pet..." onkeyup="filterPets()">
         <div id="pet-options"></div>
     </div>
 
     <script>
-        // LIENS D'IMAGES DIRECTS DEPUIS LE WIKI (PLUS STABLES)
         const pets = [
-            { n: "Shadow Dragon", v: 1000, i: "https://static.wikia.nocookie.net/adoptme/images/a/aa/Shadow_Dragon.png" },
-            { n: "Bat Dragon", v: 865, i: "https://static.wikia.nocookie.net/adoptme/images/a/ab/Bat_Dragon.png" },
-            { n: "Frost Dragon", v: 415, i: "https://static.wikia.nocookie.net/adoptme/images/a/a2/Frost_Dragon.png" },
-            { n: "Giraffe", v: 520, i: "https://static.wikia.nocookie.net/adoptme/images/1/13/Giraffe.png" },
-            { n: "Owl", v: 265, i: "https://static.wikia.nocookie.net/adoptme/images/3/39/Owl.png" },
-            { n: "Parrot", v: 215, i: "https://static.wikia.nocookie.net/adoptme/images/c/c3/Parrot.png" },
-            { n: "Evil Unicorn", v: 165, i: "https://static.wikia.nocookie.net/adoptme/images/d/d3/Evil_Unicorn.png" },
-            { n: "Crow", v: 155, i: "https://static.wikia.nocookie.net/adoptme/images/0/03/Crow.png" },
-            { n: "Arctic Reindeer", v: 45, i: "https://static.wikia.nocookie.net/adoptme/images/8/87/Arctic_Reindeer.png" },
-            { n: "Turtle", v: 21, i: "https://static.wikia.nocookie.net/adoptme/images/4/42/Turtle.png" },
-            { n: "Cow", v: 16, i: "https://static.wikia.nocookie.net/adoptme/images/2/22/Cow.png" },
-            { n: "Giant Panda", v: 3.5, i: "https://static.wikia.nocookie.net/adoptme/images/c/c5/Giant_Panda.png" },
-            { n: "Unicorn", v: 2.5, i: "https://static.wikia.nocookie.net/adoptme/images/a/a0/Unicorn.png" },
-            { n: "Kangaroo", v: 18.5, i: "https://static.wikia.nocookie.net/adoptme/images/3/31/Kangaroo.png" },
-            { n: "Blue Egg", v: 130, i: "https://static.wikia.nocookie.net/adoptme/images/0/00/Blue_Egg.png" },
-            { n: "Safari Egg", v: 95, i: "https://static.wikia.nocookie.net/adoptme/images/d/dd/Safari_Egg.png" },
-            { n: "Farm Egg", v: 42, i: "https://static.wikia.nocookie.net/adoptme/images/0/0b/Farm_Egg.png" },
-            { n: "Caterpillar", v: 8.5, i: "https://static.wikia.nocookie.net/adoptme/images/e/e0/Caterpillar.png" },
-            { n: "African Wild Dog", v: 12.5, i: "https://static.wikia.nocookie.net/adoptme/images/3/30/African_Wild_Dog.png" }
+            { n: "Shadow Dragon", v: 1000, r: "legendary", i: "https://static.wikia.nocookie.net/adoptme/images/a/aa/Shadow_Dragon.png" },
+            { n: "Bat Dragon", v: 865, r: "legendary", i: "https://static.wikia.nocookie.net/adoptme/images/a/ab/Bat_Dragon.png" },
+            { n: "Frost Dragon", v: 415, r: "legendary", i: "https://static.wikia.nocookie.net/adoptme/images/a/a2/Frost_Dragon.png" },
+            { n: "Giraffe", v: 520, r: "legendary", i: "https://static.wikia.nocookie.net/adoptme/images/1/13/Giraffe.png" },
+            { n: "Owl", v: 265, r: "legendary", i: "https://static.wikia.nocookie.net/adoptme/images/3/39/Owl.png" },
+            { n: "Cow", v: 16, r: "rare", i: "https://static.wikia.nocookie.net/adoptme/images/2/22/Cow.png" },
+            { n: "Giant Panda", v: 3.5, r: "legendary", i: "https://static.wikia.nocookie.net/adoptme/images/c/c5/Giant_Panda.png" },
+            { n: "Arctic Reindeer", v: 45, r: "legendary", i: "https://static.wikia.nocookie.net/adoptme/images/8/87/Arctic_Reindeer.png" },
+            { n: "Albino Monkey", v: 24, r: "legendary", i: "https://static.wikia.nocookie.net/adoptme/images/c/c3/Albino_Monkey.png" },
+            { n: "Unicorn", v: 2.5, r: "legendary", i: "https://static.wikia.nocookie.net/adoptme/images/a/a0/Unicorn.png" },
+            { n: "Turtle", v: 21, r: "legendary", i: "https://static.wikia.nocookie.net/adoptme/images/4/42/Turtle.png" },
+            { n: "Kangaroo", v: 18.5, r: "legendary", i: "https://static.wikia.nocookie.net/adoptme/images/3/31/Kangaroo.png" },
+            { n: "Blue Egg", v: 130, r: "legendary", i: "https://static.wikia.nocookie.net/adoptme/images/0/00/Blue_Egg.png" },
+            { n: "African Wild Dog", v: 12.5, r: "ultra", i: "https://static.wikia.nocookie.net/adoptme/images/3/30/African_Wild_Dog.png" }
         ];
 
         let curSide = 'you', curSlot = 0, curMod = 'normal';
@@ -145,7 +138,7 @@
             pets.sort((a,b) => b.v - a.v).forEach(p => {
                 opt.innerHTML += `<div class="pet-option" onclick="selectPet('${p.n}', ${p.v}, '${p.i}')">
                     <img src="${p.i}">
-                    <div style="flex:1"><b>${p.n}</b></div>
+                    <div style="flex:1"><b>${p.n}</b><br><span class="rarity-tag" style="background:var(--${p.r})">${p.r}</span></div>
                     <b style="color:var(--accent)">${p.v}</b>
                 </div>`;
             });
@@ -153,9 +146,9 @@
 
         function selectPet(name, val, img) {
             let fVal = val; let label = "";
-            if(curMod === 'neon') { fVal *= 4.5; label = "N"; }
-            if(curMod === 'mega') { fVal *= 18; label = "M"; }
-            if(document.getElementById('fly').checked) { fVal += 1; label += "F"; }
+            if(curMod === 'neon') { fVal *= 4; label = "N"; }
+            if(curMod === 'mega') { fVal *= 16; label = "M"; }
+            if(document.getElementById('fly').checked) { fVal += 1.5; label += "F"; }
             if(document.getElementById('ride').checked) { fVal += 0.5; label += "R"; }
             
             const id = curSide === 'you' ? `sy-${curSlot}` : `st-${curSlot}`;
@@ -170,13 +163,6 @@
             document.getElementById('v-them').innerText = sT.toFixed(1);
             const total = sY + sT;
             document.getElementById('fill').style.width = total === 0 ? "50%" : (sY / total * 100) + "%";
-            
-            const diff = sT - sY;
-            const st = document.getElementById('status');
-            if(total === 0) { st.innerText = "FAIR"; st.style.color = "#ccc"; }
-            else if(diff > 5) { st.innerText = "BIG WIN"; st.style.color = "#2ecc71"; }
-            else if(diff < -5) { st.innerText = "LOSE"; st.style.color = "#e74c3c"; }
-            else { st.innerText = "FAIR"; st.style.color = "#f1c40f"; }
         }
 
         function renderValueList() {
@@ -197,14 +183,13 @@
 
         function closePicker() { document.getElementById('picker').style.display='none'; document.getElementById('overlay').style.display='none'; }
         
-        function init() {
+        window.onload = () => {
             const gy = document.getElementById('grid-you'), gt = document.getElementById('grid-them');
             for(let i=0; i<9; i++) {
                 gy.innerHTML += `<div class="slot" onclick="openPicker('you', ${i})" id="sy-${i}">+</div>`;
                 gt.innerHTML += `<div class="slot" onclick="openPicker('them', ${i})" id="st-${i}">+</div>`;
             }
         }
-        init();
     </script>
 </body>
 </html>
