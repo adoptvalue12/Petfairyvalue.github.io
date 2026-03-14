@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FairyValue 🧚 - Version Complète Restaurée</title>
+    <title>FairyValue 🧚 - AMVGG Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -135,10 +135,11 @@
             if(id === 'list-page') renderValueList();
         }
 
-        // FONCTION IMAGE ROBUSTE
+        // --- LA NOUVELLE FONCTION AMVGG ---
         function getImgUrl(name) {
-            const formatted = name.replace(/ /g, "_");
-            return `https://adoptme.fandom.com/wiki/Special:FilePath/${formatted}.png?width=150`;
+            // AMVGG utilise des noms en minuscules sans espaces
+            const clean = name.toLowerCase().replace(/ /g, "");
+            return `https://adoptmevalue.gg/images/pets/${clean}.png`;
         }
 
         function setMod(m) {
