@@ -3,52 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FairyValue 🧚 - Full Database Edition</title>
+    <title>FairyValue 🧚 - UNBREAKABLE EDITION</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #ff85a2; --accent: #f72585; --bg-rose: #ffe5ec; --slot-border: #ffb3c1;
             --legendary: #ffac33; --ultra: #ff66cc; --rare: #33ccff; --uncommon: #66ff66; --common: #b3b3b3;
         }
-        body, html { margin: 0; padding: 0; font-family: 'Outfit', sans-serif; min-height: 100vh; background: #fff5f7; }
+        body, html { margin: 0; padding: 0; font-family: 'Outfit', sans-serif; min-height: 100vh; background: #fff5f7; color: #333; }
         
         #home-page {
             height: 100vh; background: linear-gradient(rgba(255, 133, 162, 0.4), rgba(0,0,0,0.6)), url('https://wallpapers.com/images/hd/adopt-me-background-r2fa0g7qap0177br.jpg');
             background-size: cover; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white;
         }
-        .hero-title { font-size: 4.5rem; font-weight: 900; text-shadow: 0 5px 20px rgba(0,0,0,0.4); margin-bottom: 20px; }
-        
-        .btn-container { display: flex; gap: 20px; }
-        .glass-btn { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border: 3px solid white; padding: 18px 45px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1rem; text-transform: uppercase; }
+        .hero-title { font-size: clamp(3rem, 10vw, 5rem); font-weight: 900; text-shadow: 0 5px 20px rgba(0,0,0,0.4); }
+        .btn-container { display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
+        .glass-btn { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border: 3px solid white; padding: 15px 40px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
         .glass-btn:hover { background: white; color: var(--accent); transform: scale(1.05); }
 
-        .section { display: none; padding: 25px; animation: fadeIn 0.4s ease-out; }
+        .section { display: none; padding: 20px; animation: fadeIn 0.4s; }
         .active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Calculateur */
-        .elve-container { background: white; border-radius: 35px; padding: 25px; max-width: 550px; margin: 0 auto 30px; box-shadow: 0 20px 50px rgba(255,133,162,0.2); text-align: center; border: 2px solid var(--bg-rose); }
-        .elve-bar { height: 20px; background: #f0f0f0; border-radius: 20px; margin: 20px 0; overflow: hidden; display: flex; border: 2px solid #eee; }
-        #fill { height: 100%; width: 50%; background: linear-gradient(90deg, #ff944d, #f72585); transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .elve-container { background: white; border-radius: 35px; padding: 25px; max-width: 550px; margin: 0 auto 30px; box-shadow: 0 15px 40px rgba(255,133,162,0.15); text-align: center; }
+        .elve-bar { height: 18px; background: #f0f0f0; border-radius: 20px; margin: 15px 0; overflow: hidden; display: flex; }
+        #fill { height: 100%; width: 50%; background: linear-gradient(to right, #ff944d, #f72585); transition: 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28); }
 
-        .trade-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; background: var(--bg-rose); padding: 15px; border-radius: 25px; border: 4px solid var(--slot-border); }
-        .slot { width: 90px; height: 90px; background: white; border: 2px solid var(--slot-border); border-radius: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: 0.2s; overflow: hidden; }
-        .slot img { width: 80%; height: 80%; object-fit: contain; }
-        .slot-label { position: absolute; bottom: 4px; right: 6px; font-size: 0.7rem; font-weight: 900; color: white; background: var(--accent); padding: 2px 6px; border-radius: 6px; z-index: 10; }
+        .trade-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: var(--bg-rose); padding: 15px; border-radius: 25px; border: 4px solid var(--slot-border); }
+        .slot { width: 85px; height: 85px; background: white; border: 2px solid var(--slot-border); border-radius: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; }
+        .slot img { width: 85%; height: 85%; object-fit: contain; }
+        .slot-label { position: absolute; bottom: 3px; right: 5px; font-size: 0.65rem; font-weight: 900; color: white; background: var(--accent); padding: 1px 5px; border-radius: 5px; }
 
-        /* Picker */
-        #picker { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; width:95%; max-width: 600px; height:85vh; z-index:2000; border-radius:40px; padding:30px; box-shadow: 0 0 100px rgba(0,0,0,0.4); overflow-y: auto; }
-        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); backdrop-filter: blur(8px); z-index:1999; }
+        #picker { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; width:95%; max-width: 550px; height:85vh; z-index:2000; border-radius:40px; padding:25px; box-shadow: 0 0 100px rgba(0,0,0,0.3); overflow-y: auto; }
+        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index:1999; }
         
-        .modifier-row { display: flex; justify-content: space-around; background: #fdf0f3; padding: 15px; border-radius: 20px; margin-bottom: 20px; }
-        .mod-btn { cursor: pointer; padding: 10px 25px; border-radius: 15px; border: 2px solid #ffccd5; background: white; font-weight: bold; transition: 0.2s; }
-        .mod-btn.selected { background: var(--accent); color: white; border-color: var(--accent); transform: scale(1.05); }
+        .modifier-row { display: flex; justify-content: space-around; background: #fdf0f3; padding: 12px; border-radius: 20px; margin-bottom: 15px; }
+        .mod-btn { cursor: pointer; padding: 8px 18px; border-radius: 12px; border: 2px solid #ffccd5; background: white; font-weight: bold; }
+        .mod-btn.selected { background: var(--accent); color: white; border-color: var(--accent); }
 
-        .pet-option { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #fff0f3; cursor: pointer; transition: 0.2s; }
-        .pet-option:hover { background: #fff5f7; padding-left: 20px; }
-        .pet-option img { width: 60px; height: 60px; object-fit: contain; margin-right: 20px; }
-        
-        #search { width: 100%; padding: 15px 25px; border-radius: 50px; border: 2px solid #eee; margin-bottom: 20px; outline: none; font-size: 1rem; }
+        .pet-option { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #fff0f3; cursor: pointer; }
+        .pet-option img { width: 55px; height: 55px; object-fit: contain; margin-right: 15px; border-radius: 10px; }
+        #search { width: 100%; padding: 15px; border-radius: 30px; border: 2px solid #eee; margin-bottom: 15px; outline: none; }
     </style>
 </head>
 <body>
@@ -62,25 +57,24 @@
     </div>
 
     <div id="calc-page" class="section">
-        <button onclick="showPage('home-page')" style="background:none; border:none; color:var(--accent); font-weight:900; cursor:pointer; font-size: 1.1rem; margin-bottom: 20px;">← RETOUR</button>
+        <button onclick="showPage('home-page')" style="background:none; border:none; color:var(--accent); font-weight:900; cursor:pointer;">← RETOUR</button>
         <div class="elve-container">
-            <div style="display:flex; justify-content:space-between; font-size:3rem; font-weight:900; margin-bottom: 10px;">
+            <div style="display:flex; justify-content:space-between; font-size:2.5rem; font-weight:900; margin-bottom:10px;">
                 <span id="v-you">0</span> <span id="v-them" style="color:var(--accent)">0</span>
             </div>
             <div class="elve-bar"><div id="fill"></div></div>
-            <div style="display:flex; justify-content:center; gap:30px; font-weight:900; color:#ccc;"><span id="l-win">WIN</span> <span id="l-fair">FAIR</span> <span id="l-lose">LOSE</span></div>
+            <div style="font-weight:900; color:#ccc; letter-spacing: 2px;"><span id="status">FAIR</span></div>
         </div>
-        <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap;">
-            <div><h4 style="text-align:center; color:var(--primary); font-size:1.2rem;">YOU</h4><div class="trade-grid" id="grid-you"></div></div>
-            <div><h4 style="text-align:center; color:var(--accent); font-size:1.2rem;">THEM</h4><div class="trade-grid" id="grid-them"></div></div>
+        <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+            <div class="trade-grid" id="grid-you"></div>
+            <div class="trade-grid" id="grid-them"></div>
         </div>
-        <center><button onclick="location.reload()" style="margin-top:30px; padding:15px 50px; border-radius:50px; border:none; background:var(--accent); color:white; font-weight:900; cursor:pointer; box-shadow: 0 10px 20px rgba(247, 37, 133, 0.2);">RESET TRADE</button></center>
+        <center><button onclick="location.reload()" style="margin-top:20px; padding:12px 40px; border-radius:50px; border:none; background:var(--accent); color:white; font-weight:bold; cursor:pointer;">RESET</button></center>
     </div>
 
     <div id="list-page" class="section">
         <button onclick="showPage('home-page')" style="background:none; border:none; color:var(--accent); font-weight:900; cursor:pointer;">← RETOUR</button>
-        <h2 style="text-align:center; color:var(--accent); font-size: 2rem; margin: 20px 0;">DATABASE COMPLÈTE 📊</h2>
-        <div id="full-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap:20px;"></div>
+        <div id="full-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap:15px; margin-top:20px;"></div>
     </div>
 
     <div class="overlay" id="overlay" onclick="closePicker()"></div>
@@ -90,68 +84,40 @@
             <div class="mod-btn" id="m-neon" onclick="setMod('neon')">Neon</div>
             <div class="mod-btn" id="m-mega" onclick="setMod('mega')">Mega</div>
         </div>
-        <div class="modifier-row" style="margin-top:-10px; background:none;">
-            <label style="font-weight:bold; cursor:pointer;"><input type="checkbox" id="fly"> FLY</label>
-            <label style="font-weight:bold; cursor:pointer;"><input type="checkbox" id="ride"> RIDE</label>
+        <div class="modifier-row" style="background:none;">
+            <label style="cursor:pointer;"><input type="checkbox" id="fly"> Fly</label>
+            <label style="cursor:pointer; margin-left:15px;"><input type="checkbox" id="ride"> Ride</label>
         </div>
-        <input type="text" id="search" placeholder="Chercher un familier (ex: Cow, Panda...)" onkeyup="filterPets()">
+        <input type="text" id="search" placeholder="Chercher un pet (Cow, Shadow, Panda...)" onkeyup="filterPets()">
         <div id="pet-options"></div>
     </div>
 
     <script>
+        // LIENS D'IMAGES DIRECTS DEPUIS LE WIKI (PLUS STABLES)
         const pets = [
-            // HIGH TIERS
-            { n: "Shadow Dragon", v: 1000, r: "legendary" },
-            { n: "Bat Dragon", v: 865, r: "legendary" },
-            { n: "Frost Dragon", v: 415, r: "legendary" },
-            { n: "Giraffe", v: 520, r: "legendary" },
-            { n: "Owl", v: 265, r: "legendary" },
-            { n: "Parrot", v: 215, r: "legendary" },
-            { n: "Evil Unicorn", v: 165, r: "legendary" },
-            { n: "Crow", v: 155, r: "legendary" },
-            { n: "Arctic Reindeer", v: 45, r: "legendary" },
-            { n: "Albino Monkey", v: 24, r: "legendary" },
-
-            // POPULAIRES / EXOTIQUES
-            { n: "Cow", v: 16, r: "rare" },
-            { n: "Turtle", v: 21, r: "legendary" },
-            { n: "Kangaroo", v: 18.5, r: "legendary" },
-            { n: "Giant Panda", v: 35, r: "legendary" },
-            { n: "Unicorn", v: 2.5, r: "legendary" },
-            { n: "Balloon Unicorn", v: 14.5, r: "legendary" },
-            { n: "Blue Dog", v: 38, r: "uncommon" },
-            { n: "Pink Cat", v: 30, r: "uncommon" },
-            { n: "Dalmatian", v: 22, r: "ultra" },
-            { n: "Flamingo", v: 20, r: "ultra" },
-            { n: "Lion", v: 18, r: "ultra" },
-            { n: "Elephant", v: 17, r: "rare" },
-            { n: "Hyena", v: 12, r: "rare" },
-            { n: "Crocodile", v: 14, r: "ultra" },
-            { n: "Shrew", v: 8, r: "rare" },
-            { n: "Turkey", v: 7.5, r: "ultra" },
-            { n: "Llama", v: 6.5, r: "ultra" },
-            { n: "Puffin", v: 5.5, r: "ultra" },
-            { n: "African Wild Dog", v: 12.5, r: "ultra" },
-            { n: "Pelican", v: 9.8, r: "ultra" },
-            { n: "Mini Pig", v: 4.5, r: "ultra" },
-
-            // EGGS
-            { n: "Blue Egg", v: 130, r: "legendary" },
-            { n: "Pink Egg", v: 110, r: "legendary" },
-            { n: "Safari Egg", v: 95, r: "legendary" },
-            { n: "Jungle Egg", v: 65, r: "legendary" },
-            { n: "Farm Egg", v: 42, r: "legendary" },
-            { n: "Christmas Egg", v: 28, r: "legendary" },
-            { n: "Aussie Egg", v: 3.5, r: "legendary" },
-            { n: "Fossil Egg", v: 2.5, r: "legendary" }
+            { n: "Shadow Dragon", v: 1000, i: "https://static.wikia.nocookie.net/adoptme/images/a/aa/Shadow_Dragon.png" },
+            { n: "Bat Dragon", v: 865, i: "https://static.wikia.nocookie.net/adoptme/images/a/ab/Bat_Dragon.png" },
+            { n: "Frost Dragon", v: 415, i: "https://static.wikia.nocookie.net/adoptme/images/a/a2/Frost_Dragon.png" },
+            { n: "Giraffe", v: 520, i: "https://static.wikia.nocookie.net/adoptme/images/1/13/Giraffe.png" },
+            { n: "Owl", v: 265, i: "https://static.wikia.nocookie.net/adoptme/images/3/39/Owl.png" },
+            { n: "Parrot", v: 215, i: "https://static.wikia.nocookie.net/adoptme/images/c/c3/Parrot.png" },
+            { n: "Evil Unicorn", v: 165, i: "https://static.wikia.nocookie.net/adoptme/images/d/d3/Evil_Unicorn.png" },
+            { n: "Crow", v: 155, i: "https://static.wikia.nocookie.net/adoptme/images/0/03/Crow.png" },
+            { n: "Arctic Reindeer", v: 45, i: "https://static.wikia.nocookie.net/adoptme/images/8/87/Arctic_Reindeer.png" },
+            { n: "Turtle", v: 21, i: "https://static.wikia.nocookie.net/adoptme/images/4/42/Turtle.png" },
+            { n: "Cow", v: 16, i: "https://static.wikia.nocookie.net/adoptme/images/2/22/Cow.png" },
+            { n: "Giant Panda", v: 3.5, i: "https://static.wikia.nocookie.net/adoptme/images/c/c5/Giant_Panda.png" },
+            { n: "Unicorn", v: 2.5, i: "https://static.wikia.nocookie.net/adoptme/images/a/a0/Unicorn.png" },
+            { n: "Kangaroo", v: 18.5, i: "https://static.wikia.nocookie.net/adoptme/images/3/31/Kangaroo.png" },
+            { n: "Blue Egg", v: 130, i: "https://static.wikia.nocookie.net/adoptme/images/0/00/Blue_Egg.png" },
+            { n: "Safari Egg", v: 95, i: "https://static.wikia.nocookie.net/adoptme/images/d/dd/Safari_Egg.png" },
+            { n: "Farm Egg", v: 42, i: "https://static.wikia.nocookie.net/adoptme/images/0/0b/Farm_Egg.png" },
+            { n: "Caterpillar", v: 8.5, i: "https://static.wikia.nocookie.net/adoptme/images/e/e0/Caterpillar.png" },
+            { n: "African Wild Dog", v: 12.5, i: "https://static.wikia.nocookie.net/adoptme/images/3/30/African_Wild_Dog.png" }
         ];
 
         let curSide = 'you', curSlot = 0, curMod = 'normal';
         let dataYou = Array(9).fill(0), dataThem = Array(9).fill(0);
-
-        function getImgUrl(name) {
-            return `https://www.adoptmevaluelist.com/assets/images/pets/${name.toLowerCase().replace(/ /g, "_")}.png`;
-        }
 
         function showPage(id) {
             document.getElementById('home-page').style.display = (id === 'home-page') ? 'flex' : 'none';
@@ -170,7 +136,6 @@
             curSide = side; curSlot = slot; setMod('normal');
             document.getElementById('picker').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
-            document.getElementById('search').value = "";
             renderOptions();
         }
 
@@ -178,10 +143,8 @@
             const opt = document.getElementById('pet-options');
             opt.innerHTML = "";
             pets.sort((a,b) => b.v - a.v).forEach(p => {
-                const img = getImgUrl(p.n);
-                opt.innerHTML += `
-                <div class="pet-option" onclick="selectPet('${p.n}', ${p.v}, '${img}')">
-                    <img src="${img}" onerror="this.src='https://via.placeholder.com/60?text=?'">
+                opt.innerHTML += `<div class="pet-option" onclick="selectPet('${p.n}', ${p.v}, '${p.i}')">
+                    <img src="${p.i}">
                     <div style="flex:1"><b>${p.n}</b></div>
                     <b style="color:var(--accent)">${p.v}</b>
                 </div>`;
@@ -190,9 +153,9 @@
 
         function selectPet(name, val, img) {
             let fVal = val; let label = "";
-            if(curMod === 'neon') { fVal *= 4; label = "N"; }
-            if(curMod === 'mega') { fVal *= 16; label = "M"; }
-            if(document.getElementById('fly').checked) { fVal += 1.5; label += "F"; }
+            if(curMod === 'neon') { fVal *= 4.5; label = "N"; }
+            if(curMod === 'mega') { fVal *= 18; label = "M"; }
+            if(document.getElementById('fly').checked) { fVal += 1; label += "F"; }
             if(document.getElementById('ride').checked) { fVal += 0.5; label += "R"; }
             
             const id = curSide === 'you' ? `sy-${curSlot}` : `st-${curSlot}`;
@@ -206,36 +169,30 @@
             document.getElementById('v-you').innerText = sY.toFixed(1);
             document.getElementById('v-them').innerText = sT.toFixed(1);
             const total = sY + sT;
-            const fill = document.getElementById('fill');
-            fill.style.width = total === 0 ? "50%" : (sY / total * 100) + "%";
+            document.getElementById('fill').style.width = total === 0 ? "50%" : (sY / total * 100) + "%";
             
             const diff = sT - sY;
-            ['l-win', 'l-fair', 'l-lose'].forEach(l => document.getElementById(l).style.color = "#ccc");
-            if(total > 0) {
-                if(diff > 3) document.getElementById('l-win').style.color = "#2ecc71";
-                else if(diff < -3) document.getElementById('l-lose').style.color = "#ff5e5e";
-                else document.getElementById('l-fair').style.color = "#f1c40f";
-            }
+            const st = document.getElementById('status');
+            if(total === 0) { st.innerText = "FAIR"; st.style.color = "#ccc"; }
+            else if(diff > 5) { st.innerText = "BIG WIN"; st.style.color = "#2ecc71"; }
+            else if(diff < -5) { st.innerText = "LOSE"; st.style.color = "#e74c3c"; }
+            else { st.innerText = "FAIR"; st.style.color = "#f1c40f"; }
         }
 
         function renderValueList() {
             const container = document.getElementById('full-list');
             container.innerHTML = "";
             pets.forEach(p => {
-                container.innerHTML += `
-                <div style="background:white; padding:20px; border-radius:25px; text-align:center; box-shadow:0 10px 20px rgba(0,0,0,0.03);">
-                    <img src="${getImgUrl(p.n)}" style="width:70px; height:70px; object-fit:contain;"><br>
-                    <b style="display:block; margin:10px 0;">${p.n}</b>
-                    <span style="color:var(--accent); font-weight:900; font-size:1.2rem;">${p.v}</span>
+                container.innerHTML += `<div style="background:white; padding:15px; border-radius:20px; text-align:center; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+                    <img src="${p.i}" style="width:70px;"><br>
+                    <b>${p.n}</b><br><span style="color:var(--accent); font-weight:900;">${p.v}</span>
                 </div>`;
             });
         }
 
         function filterPets() {
             const s = document.getElementById('search').value.toLowerCase();
-            document.querySelectorAll('.pet-option').forEach(o => {
-                o.style.display = o.innerText.toLowerCase().includes(s) ? "flex" : "none";
-            });
+            document.querySelectorAll('.pet-option').forEach(o => o.style.display = o.innerText.toLowerCase().includes(s) ? "flex" : "none");
         }
 
         function closePicker() { document.getElementById('picker').style.display='none'; document.getElementById('overlay').style.display='none'; }
