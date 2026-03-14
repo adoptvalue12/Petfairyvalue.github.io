@@ -116,27 +116,20 @@
     </div>
 
     <script>
-        // DATABASE AVEC SYSTÈME OLD VALUE
-        // v = valeur actuelle, oldV = ancienne valeur pour afficher rise/loss
         const pets = [
-            // LEGENDARY
             { n: "Bat Dragon", v: 630, oldV: 300, r: "legendary" },
             { n: "Shadow Dragon", v: 550, oldV: 400, r: "legendary" },
             { n: "Giraffe", v: 220.5, oldV: 190, r: "legendary" },
             { n: "Frost Dragon", v: 195, oldV: 130, r: "legendary" },
             { n: "Owl", v: 170, oldV: 265, r: "legendary" },
-            { n: "Parrot", v: 135,5, oldV: 80, r: "legendary" }, // Exemple RISE
-            { n: "Cryptid", v: 67, oldV: 62, r: "legendary" }, // Exemple LOSS
+            { n: "Parrot", v: 135.5, oldV: 80, r: "legendary" },
+            { n: "Cryptid", v: 67, oldV: 62, r: "legendary" },
             { n: "Caelum Cervi", v: 8.5, oldV: 9.5, r: "legendary" },
             { n: "Diamond Butterfly", v: 55, oldV: 75, r: "legendary" },
             { n: "Mechapup", v: 8.5, oldV: 5.5, r: "legendary" },
-            
-            // ULTRA-RARE
             { n: "Hedgehog", v: 38.5, oldV: 37.5, r: "ultra" },
             { n: "Dalmatian", v: 45.5, oldV: 18.5, r: "ultra" },
             { n: "Puffin", v: 6.5, oldV: 3.5, r: "ultra" },
-            
-            // UNCOMMON & COMMON (Nouveaux)
             { n: "Blue Dog", v: 28, oldV: 22, r: "uncommon" },
             { n: "Pink Cat", v: 14, oldV: 10, r: "uncommon" },
             { n: "Wild Boar", v: 5.5, oldV: 4, r: "uncommon" },
@@ -144,8 +137,6 @@
             { n: "Dog", v: 0.1, oldV: 0.1, r: "common" },
             { n: "Cat", v: 0.1, oldV: 0.1, r: "common" },
             { n: "Otter", v: 0.2, oldV: 0.2, r: "common" },
-
-            // ITEMS
             { n: "Fly Potion", v: 2.5, oldV: 1.5, r: "item" },
             { n: "Ride Potion", v: 2.0, oldV: 1.0, r: "item" },
             { n: "Candy Cannon", v: 135, oldV: 400, r: "item" }
@@ -214,17 +205,14 @@
             const sY = dYou.reduce((a,b)=>a+b,0), sT = dThem.reduce((a,b)=>a+b,0);
             document.getElementById('v-you').innerText = sY.toFixed(1);
             document.getElementById('v-them').innerText = sT.toFixed(1);
-            
             const fill = document.getElementById('fill');
             const prof = document.getElementById('profit-text');
-            
             if(sY === 0 && sT === 0) {
                 fill.style.width = "50%"; prof.innerText = "START A TRADE"; prof.style.color = "#ccc";
             } else {
                 const ratio = sT / sY;
                 const perc = (sY / (sY + sT)) * 100;
                 fill.style.width = perc + "%";
-                
                 if(ratio >= 1.2) { prof.innerText = "BIG WIN 🤑"; prof.style.color = "#48bb78"; }
                 else if(ratio >= 1.05) { prof.innerText = "WIN ✅"; prof.style.color = "#81e6d9"; }
                 else if(ratio >= 0.95) { prof.innerText = "FAIR 🤝"; prof.style.color = "#ecc94b"; }
@@ -240,7 +228,6 @@
                 let statusHtml = "";
                 if(p.v > p.oldV) statusHtml = `<div class="status-badge rise">RISING 🔥 (was ${p.oldV})</div>`;
                 else if(p.v < p.oldV) statusHtml = `<div class="status-badge loss">LOSING 📉 (was ${p.oldV})</div>`;
-
                 cont.innerHTML += `
                 <div class="pet-card">
                     <div class="rarity-header" style="background:var(--${p.r})"></div>
@@ -267,5 +254,4 @@
         init();
     </script>
 </body>
-                </html>
-                
+</html>
