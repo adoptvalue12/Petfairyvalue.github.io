@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FairyValue 🧚 - Version Complète</title>
+    <title>FairyValue 🧚 - Mega Update</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #ff85a2; --accent: #f72585; --bg-rose: #ffe5ec; --slot-border: #ffb3c1;
             --legendary: #ffac33; --ultra: #ff66cc; --rare: #33ccff; --uncommon: #66ff66; --common: #b3b3b3;
+            --exotic: #9d4edd;
         }
         body, html { margin: 0; padding: 0; font-family: 'Outfit', sans-serif; min-height: 100vh; color: #333; background: #fff5f7; }
         
@@ -93,6 +94,7 @@
 
     <script>
         const pets = [
+            // --- HIGH TIERS ---
             { n: "Shadow Dragon", v: 1000, r: "legendary" },
             { n: "Bat Dragon", v: 865, r: "legendary" },
             { n: "Giraffe", v: 520, r: "legendary" },
@@ -101,39 +103,46 @@
             { n: "Parrot", v: 215, r: "legendary" },
             { n: "Evil Unicorn", v: 165, r: "legendary" },
             { n: "Crow", v: 155, r: "legendary" },
-            { n: "Blazing Lion", v: 145, r: "legendary" },
-            { n: "Blue Egg", v: 130, r: "legendary" },
-            { n: "Safari Egg", v: 95, r: "legendary" },
-            { n: "Arctic Reindeer", v: 45, r: "legendary" },
-            { n: "Farm Egg", v: 42, r: "legendary" },
-            { n: "Blue Dog", v: 38, r: "legendary" },
-            { n: "Pink Cat", v: 30, r: "uncommon" },
-            { n: "Albino Monkey", v: 24, r: "legendary" },
-            { n: "Turtle", v: 21, r: "legendary" },
-            { n: "Kangaroo", v: 18.5, r: "legendary" },
-            { n: "Dalmatian", v: 18.5, r: "ultra" },
-            { n: "Flamingo", v: 17, r: "ultra" },
-            { n: "Cow", v: 16, r: "rare" },
-            { n: "Balloon Unicorn", v: 14.5, r: "legendary" },
-            { n: "African Wild Dog", v: 12.5, r: "ultra" },
-            { n: "Peppermint Penguin", v: 11, r: "ultra" },
-            { n: "Elephant", v: 11, r: "rare" },
-            { n: "Lion", v: 10.5, r: "ultra" },
-            { n: "Pelican", v: 9.5, r: "ultra" },
-            { n: "Hyena", v: 9, r: "rare" },
-            { n: "Caterpillar", v: 8, r: "ultra" },
-            { n: "Zombie Buffalo", v: 4.8, r: "ultra" },
-            { n: "Mini Pig", v: 4.5, r: "ultra" },
-            { n: "Shrew", v: 4.5, r: "rare" },
-            { n: "Jellyfish", v: 4, r: "ultra" },
-            { n: "Turkey", v: 3.8, r: "ultra" },
-            { n: "Giant Panda", v: 3.5, r: "ultra" },
-            { n: "Llama", v: 3.5, r: "ultra" },
+
+            // --- EXOTIQUES (EXO) ---
+            { n: "Balloon Unicorn", v: 14.5, r: "legendary", tag: "EXO" },
+            { n: "African Wild Dog", v: 12.5, r: "ultra", tag: "EXO" },
+            { n: "Peppermint Penguin", v: 11, r: "ultra", tag: "EXO" },
+            { n: "Pelican", v: 9.5, r: "ultra", tag: "EXO" },
+            { n: "Caterpillar", v: 8, r: "ultra", tag: "EXO" },
+            { n: "Giant Panda", v: 3.5, r: "ultra", tag: "EXO" },
+            { n: "Jellyfish", v: 4.0, r: "ultra", tag: "EXO" },
+
+            // --- NOUVEAUTÉS LÉGENDAIRES ---
+            { n: "Dragonfruit Fox", v: 4.5, r: "legendary" },
+            { n: "Midnight Dragon", v: 6.2, r: "legendary" },
+            { n: "Ghost Dragon", v: 3.8, r: "legendary" },
+            { n: "Ice Wolf", v: 3.2, r: "legendary" },
+            { n: "Vampire Dragon", v: 5.5, r: "legendary" },
+            { n: "Dancing Dragon", v: 2.8, r: "legendary" },
+            { n: "Capricorn", v: 2.5, r: "legendary" },
+
+            // --- NOUVEAUTÉS ULTRA RARES ---
+            { n: "Dango Penguin", v: 1.8, r: "ultra" },
+            { n: "Many-Celled Dog", v: 1.2, r: "legendary" },
+            { n: "Alley Cat", v: 0.7, r: "ultra" },
+            { n: "Toasty Panda", v: 1.5, r: "ultra" },
             { n: "Glacier Moth", v: 3.5, r: "ultra" },
-            { n: "Aussie Egg", v: 3.5, r: "legendary" },
-            { n: "Sugar Glider", v: 3.2, r: "legendary" },
-            { n: "Unicorn", v: 2.5, r: "legendary" },
-            { n: "Many-Celled Dog", v: 1.2, r: "legendary" }
+            { n: "Puffin", v: 2.8, r: "ultra" },
+
+            // --- LOW VALUE LEGS ---
+            { n: "Metal Ox", v: 0.4, r: "legendary" },
+            { n: "Minion Chick", v: 0.35, r: "legendary" },
+            { n: "Kitsune", v: 0.9, r: "legendary" },
+            { n: "Dragon", v: 0.8, r: "legendary" },
+            { n: "Cerberus", v: 1.1, r: "legendary" },
+
+            // --- CLASSICS ---
+            { n: "Turtle", v: 21, r: "legendary" },
+            { n: "Cow", v: 16, r: "rare" },
+            { n: "Poodle", v: 0.4, r: "uncommon" },
+            { n: "Dog", v: 0.1, r: "common" },
+            { n: "Cat", v: 0.1, r: "common" }
         ];
 
         let curSide = 'you', curSlot = 0, curMod = 'normal';
@@ -169,9 +178,10 @@
             opt.innerHTML = "";
             pets.sort((a,b) => b.v - a.v).forEach(p => {
                 const img = getImgUrl(p.n);
+                const tagStr = p.tag ? `<span style="background:var(--exotic); color:white; font-size:10px; padding:2px 5px; border-radius:4px; margin-left:5px;">${p.tag}</span>` : '';
                 opt.innerHTML += `<div class="pet-option" onclick="selectPet('${p.n}', ${p.v}, '${img}')">
                     <img src="${img}" onerror="this.src='https://via.placeholder.com/55?text=Pet'">
-                    <div style="flex:1"><b>${p.n}</b><br><span class="rarity-tag" style="background:var(--${p.r})">${p.r}</span></div>
+                    <div style="flex:1"><b>${p.n}</b> ${tagStr}<br><span class="rarity-tag" style="background:var(--${p.r})">${p.r}</span></div>
                     <b style="color:var(--accent)">${p.v}</b>
                 </div>`;
             });
