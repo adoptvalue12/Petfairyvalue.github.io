@@ -266,4 +266,183 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .lore-rarity{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
 .lore-val-row{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
 .lore-chip{font-size:.7rem;font-weight:800;padding:3px 10px;border-radius:100px;background:var(--surface2);border:1.5px solid var(--border);color:var(--text2)}
-.lore-chip.gold{background:rgba(245
+.lore-chip.gold{background:rgba(245158,11,.1); color:var(--gold); border-color:rgba(245,158,11,.3); }
+
+.close-lore {
+  position: absolute; top: 15px; right: 15px;
+  background: var(--surface2); border: none;
+  width: 32px; height: 32px; border-radius: 50%;
+  cursor: pointer; font-weight: 900; color: var(--text3);
+}
+</style>
+</head>
+<body>
+
+<div id="home-page" class="page active">
+  <div class="home-bg"></div>
+  <div class="home-content">
+    <h1 class="home-brand">FairyValue</h1>
+    <p class="home-adopt">✦ Adopt Me Value List ✦</p>
+    <div class="home-btns">
+      <button class="hbtn hbtn-main" onclick="goTo('list-page')">Value List ✨</button>
+      <button class="hbtn hbtn-alt" onclick="goTo('calc-page')">Trade Calculator ⚖️</button>
+    </div>
+  </div>
+</div>
+
+<div id="calc-page" class="page">
+  <div class="nav">
+    <button class="nbk" onclick="goTo('home-page')">← Back</button>
+    <span class="nav-logo">FairyValue ✨</span>
+    <div class="nav-tabs">
+      <button class="ntab on" onclick="goTo('calc-page')">Calculator</button>
+      <button class="ntab" onclick="goTo('list-page')">Value List</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="calc-hero">
+      <div class="calc-row">
+        <div class="calc-side"><div class="clabel">You</div><div class="cvalue" id="v-you">0</div></div>
+        <div class="verdict-wrap">
+          <div class="verdict" id="verdict">VS</div>
+          <button class="clr-btn" onclick="resetTrade()">Reset</button>
+        </div>
+        <div class="calc-side"><div class="clabel">Them</div><div class="cvalue" id="v-them">0</div></div>
+      </div>
+    </div>
+    <div class="grids-wrap">
+      <div class="grid-box"><div class="trade-grid" id="grid-you"></div></div>
+      <div class="grid-box"><div class="trade-grid" id="grid-them"></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="list-page" class="page">
+  <div class="nav">
+    <button class="nbk" onclick="goTo('home-page')">← Back</button>
+    <span class="nav-logo">FairyValue ✨</span>
+    <div class="nav-tabs">
+      <button class="ntab" onclick="goTo('calc-page')">Calculator</button>
+      <button class="ntab on" onclick="goTo('list-page')">Value List</button>
+    </div>
+  </div>
+  <div class="content">
+    <input class="list-search" id="list-search" placeholder="🔍 Search a pet..." oninput="renderList()">
+    <div class="pet-grid" id="full-pet-grid"></div>
+  </div>
+</div>
+
+<div class="overlay" onclick="closePicker()"></div>
+<div class="picker">
+  <div class="p-handle"></div>
+  <input class="sinp" id="picker-search" placeholder="Search pet..." oninput="renderPicker()">
+  <div class="pet-list" id="picker-list"></div>
+</div>
+
+<script>
+const pets = [
+  { n: "Shadow Dragon", v: 1000, r: "leg", i: "🐉", p: "https://adoptme.fandom.com/wiki/Special:FilePath/Shadow_Dragon.png" },
+  { n: "Bat Dragon", v: 950, r: "leg", i: "🦇", p: "https://adoptme.fandom.com/wiki/Special:FilePath/Bat_Dragon.png" },
+  { n: "Giraffe", v: 650, r: "leg", i: "🦒", p: "https://adoptme.fandom.com/wiki/Special:FilePath/Giraffe.png" },
+  { n: "Frost Dragon", v: 480, r: "leg", i: "❄️", p: "https://adoptme.fandom.com/wiki/Special:FilePath/Frost_Dragon.png" },
+  { n: "Owl", v: 310, r: "leg", i: "🦉", p: "https://adoptme.fandom.com/wiki/Special:FilePath/Owl.png" },
+  { n: "Cow", v: 50, r: "rare", i: "🐮", p: "https://adoptme.fandom.com/wiki/Special:FilePath/Cow.png" },
+  { n: "Balloon Unicorn", v: 62, r: "exotic", i: "🦄", p: "https://adoptme.fandom.com/wiki/Special:FilePath/Balloon_Unicorn.png" },
+  { n: "Cryptid", v: 65, r: "exotic", i: "🐲", p: "" },
+  { n: "Tombstone", v: 75, r: "item", i: "🪦", p: "https://adoptme.fandom.com/wiki/Special:FilePath/Tombstone.png" }
+];
+
+let trade = { you: Array(9).fill(null), them: Array(9).fill(null) };
+let curSide, curSlot;
+
+function goTo(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(page).classList.add('active');
+  if(page === 'list-page') renderList();
+  window.scrollTo(0,0);
+}
+
+function openPicker(side, slot) {
+  curSide = side; curSlot = slot;
+  document.querySelector('.overlay').style.display = 'block';
+  document.querySelector('.picker').style.display = 'flex';
+  renderPicker();
+}
+
+function closePicker() {
+  document.querySelector('.overlay').style.display = 'none';
+  document.querySelector('.picker').style.display = 'none';
+}
+
+function getImg(pet) {
+  if(!pet.p) return `<span style="font-size:1.5rem">${pet.i}</span>`;
+  return `<img src="${pet.p}" style="width:80%;height:80%;object-fit:contain" onerror="this.outerHTML='<span>${pet.i}</span>'">`;
+}
+
+function renderPicker() {
+  const list = document.getElementById('picker-list');
+  const search = document.getElementById('picker-search').value.toLowerCase();
+  list.innerHTML = "";
+  pets.filter(p => p.n.toLowerCase().includes(search)).forEach(p => {
+    list.innerHTML += `
+      <div class="pet-row" onclick="addPet('${p.n}')">
+        <div class="row-icon ra-${p.r}">${getImg(p)}</div>
+        <div class="row-name">${p.n}</div>
+        <div class="row-val">${p.v}</div>
+      </div>`;
+  });
+}
+
+function addPet(name) {
+  const p = pets.find(x => x.n === name);
+  trade[curSide][curSlot] = p;
+  updateUI();
+  closePicker();
+}
+
+function updateUI() {
+  ['you', 'them'].forEach(side => {
+    trade[side].forEach((p, i) => {
+      const slot = document.getElementById(`s-${side}-${i}`);
+      if(p) {
+        slot.innerHTML = `<div class="rm" onclick="removePet(event,'${side}',${i})">×</div>${getImg(p)}<div class="sval">${p.v}</div>`;
+        slot.classList.add('filled');
+      } else {
+        slot.innerHTML = `<svg class="plus" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>`;
+        slot.classList.remove('filled');
+      }
+    });
+  });
+  const sY = trade.you.reduce((a, b) => a + (b ? b.v : 0), 0);
+  const sT = trade.them.reduce((a, b) => a + (b ? b.v : 0), 0);
+  document.getElementById('v-you').innerText = sY;
+  document.getElementById('v-them').innerText = sT;
+  const v = document.getElementById('verdict');
+  const d = sT - sY;
+  if(sY+sT===0) v.innerText="VS";
+  else if(d > 20) v.innerText="BIG WIN";
+  else if(d < -20) v.innerText="LOSE";
+  else v.innerText="FAIR";
+}
+
+function removePet(e, side, i) { e.stopPropagation(); trade[side][i] = null; updateUI(); }
+function resetTrade() { trade = { you: Array(9).fill(null), them: Array(9).fill(null) }; updateUI(); }
+
+function renderList() {
+  const grid = document.getElementById('full-pet-grid');
+  grid.innerHTML = "";
+  const s = document.getElementById('list-search').value.toLowerCase();
+  pets.filter(p => p.n.toLowerCase().includes(s)).forEach(p => {
+    grid.innerHTML += `<div class="pet-card ${p.r}"><div class="rline"></div><div class="card-icon">${getImg(p)}</div><div class="card-name">${p.n}</div><div class="card-val">${p.v}</div></div>`;
+  });
+}
+
+['you', 'them'].forEach(side => {
+  const g = document.getElementById('grid-' + side);
+  for(let i=0; i<9; i++) g.innerHTML += `<div class="slot" id="s-${side}-${i}" onclick="openPicker('${side}',${i})"></div>`;
+});
+updateUI();
+</script>
+</body>
+</html>
+
