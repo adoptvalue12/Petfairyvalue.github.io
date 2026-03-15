@@ -3,137 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FairyValue 🧚 - Pro Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;900&display=swap" rel="stylesheet">
+    <title>FairyValue ✨ Diamond Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;900&family=Bubblegum+Sans&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --primary: #ff85a2; --accent: #f72585; --bg-rose: #ffe5ec;
-            --legendary: linear-gradient(135deg, #ffcc33 0%, #ffab1a 100%);
-            --ultra: linear-gradient(135deg, #ff85e1 0%, #f72585 100%);
-            --rare: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
-            --item: linear-gradient(135deg, #b79ced 0%, #7209b7 100%);
+            --kawaii-pink: #ffc2d1; --kawaii-purple: #e2afff; --accent: #fb6f92;
+            --soft-white: #fff5f7; --leg-color: #ffcc33; --ultra-color: #f72585;
+            --rare-color: #4cc9f0;
         }
-        body, html { margin: 0; padding: 0; font-family: 'Outfit', sans-serif; background: #fff5f7; color: #333; overflow-x: hidden; }
-        #home-page { height: 100vh; background: linear-gradient(rgba(255,133,162,0.3), rgba(0,0,0,0.7)), url('https://wallpapers.com/images/hd/adopt-me-background-r2fa0g7qap0177br.jpg'); background-size: cover; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .hero-title { font-size: clamp(2.5rem, 10vw, 5rem); font-weight: 900; color: white; text-shadow: 0 0 20px var(--accent); margin: 0; }
-        .glass-btn { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border: 2px solid white; padding: 15px 30px; border-radius: 50px; color: white; font-weight: 900; cursor: pointer; margin: 10px; text-transform: uppercase; transition: 0.3s; }
-        .glass-btn:hover { background: rgba(255,255,255,0.4); }
-        .section { display: none; padding: 20px; animation: slideUp 0.3s ease; }
+        body, html { 
+            margin: 0; padding: 0; font-family: 'Outfit', sans-serif; 
+            background: var(--soft-white); color: #444; overflow-x: hidden;
+        }
+        #home-page { 
+            height: 100vh; background: linear-gradient(135deg, var(--kawaii-pink), var(--kawaii-purple));
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .hero-title { 
+            font-family: 'Bubblegum Sans', cursive; font-size: clamp(3rem, 12vw, 5.5rem); color: white; margin: 0;
+            filter: drop-shadow(0 4px 8px var(--accent)); animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        .glass-btn { 
+            background: white; border: none; padding: 15px 35px; border-radius: 40px; 
+            color: var(--accent); font-weight: 900; cursor: pointer; margin: 10px; 
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1); transition: 0.3s; font-size: 1.1rem;
+        }
+        .glass-btn:hover { transform: scale(1.1); background: var(--accent); color: white; }
+
+        .section { display: none; padding: 20px; animation: fadeIn 0.5s ease; }
         .active { display: block; }
-        .elve-container { background: white; border-radius: 30px; padding: 20px; max-width: 600px; margin: 0 auto 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .trade-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; background: #fff; padding: 10px; border-radius: 20px; border: 3px solid var(--bg-rose); }
-        .slot { width: 90px; height: 90px; background: #fdfdfd; border: 2px dashed #eee; border-radius: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; }
-        .slot img { width: 80%; height: 80%; object-fit: contain; }
-        .remove-btn { position: absolute; top: -5px; right: -5px; background: #ff4d4d; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; border: 2px solid white; z-index: 5; }
-        .slot-tag { position: absolute; bottom: 2px; right: 2px; font-size: 0.6rem; background: #333; color: white; padding: 1px 4px; border-radius: 4px; font-weight: 900; }
-        #picker { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; width:95%; max-width: 500px; height:85vh; z-index:3000; border-radius:30px; padding:20px; flex-direction: column; box-shadow: 0 0 50px rgba(0,0,0,0.3); }
-        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:2999; }
-        .mode-row { display: flex; gap: 5px; margin-bottom: 10px; flex-wrap: wrap; }
-        .m-btn { flex: 1; min-width: 60px; padding: 8px; border-radius: 10px; border: 1px solid #ddd; font-weight: 900; cursor: pointer; font-size: 0.7rem; }
-        .m-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
-        #pet-options { flex: 1; overflow-y: auto; }
-        .pet-choice { display: flex; align-items: center; gap: 10px; padding: 8px; border-bottom: 1px solid #eee; cursor: pointer; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .elve-container { 
+            background: white; border-radius: 40px; padding: 25px; max-width: 600px; 
+            margin: 0 auto 25px; text-align: center; border: 4px solid var(--kawaii-pink);
+            box-shadow: 0 15px 30px rgba(251,111,146,0.1);
+        }
+        .trade-grid { 
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; 
+            background: #fff; padding: 12px; border-radius: 30px; border: 4px solid #ffe5ec;
+        }
+        .slot { 
+            width: 90px; height: 90px; background: #fffcfd; border: 3px dashed var(--kawaii-pink); 
+            border-radius: 25px; display: flex; align-items: center; justify-content: center; 
+            cursor: pointer; position: relative; transition: 0.2s;
+        }
+        .slot img { width: 85%; height: 85%; object-fit: contain; }
+        .remove-btn { 
+            position: absolute; top: -5px; right: -5px; background: var(--accent); 
+            color: white; border-radius: 50%; width: 25px; height: 25px; 
+            display: flex; align-items: center; justify-content: center; font-size: 14px; 
+            border: 2px solid white; z-index: 10;
+        }
+        .slot-tag { 
+            position: absolute; bottom: 5px; right: 5px; font-size: 0.65rem; 
+            background: var(--kawaii-purple); color: white; padding: 2px 6px; border-radius: 8px; font-weight: 900;
+        }
+
+        #picker { 
+            display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); 
+            background:white; width:95%; max-width: 500px; height:85vh; z-index:3000; 
+            border-radius:40px; padding:25px; flex-direction: column; border: 5px solid var(--kawaii-pink);
+        }
+        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(251,111,146,0.3); backdrop-filter: blur(5px); z-index:2999; }
+
+        .m-btn { 
+            flex: 1; min-width: 60px; padding: 10px; border-radius: 15px; border: 2px solid #ffe5ec; 
+            background: white; font-weight: 900; cursor: pointer; color: var(--accent);
+        }
+        .m-btn.active { background: var(--accent); color: white; }
+
+        #pet-options { flex: 1; overflow-y: auto; padding-right: 5px; }
+        .pet-choice { 
+            display: flex; align-items: center; gap: 15px; padding: 10px; 
+            background: #fffafa; border-radius: 20px; margin-bottom: 8px; cursor: pointer; transition: 0.2s;
+            border: 2px solid transparent;
+        }
+        .pet-choice:hover { border-color: var(--kawaii-pink); background: white; transform: scale(1.02); }
+
+        .pet-card { 
+            background: white; border-radius: 25px; padding: 15px; text-align: center; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05); transition: 0.3s; position: relative;
+        }
+        .rarity-leg { border-bottom: 6px solid var(--leg-color); }
+        .rarity-ultra { border-bottom: 6px solid var(--ultra-color); }
+        .rarity-rare { border-bottom: 6px solid var(--rare-color); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <div id="home-page">
-        <h1 class="hero-title">FAIRYVALUE 🧚</h1>
+        <h1 class="hero-title">FairyValue ✨</h1>
         <div>
-            <button class="glass-btn" onclick="showPage('list-page')">Value List 📈</button>
-            <button class="glass-btn" onclick="showPage('calc-page')">Trades ✨</button>
+            <button class="glass-btn" onclick="showPage('list-page')">Value List 🎀</button>
+            <button class="glass-btn" onclick="showPage('calc-page')">Trade Center 🍭</button>
         </div>
     </div>
 
     <div id="calc-page" class="section">
-        <button onclick="showPage('home-page')" style="border:none; background:none; color:var(--accent); font-weight:900; cursor:pointer; margin-bottom: 10px;">← MENU</button>
+        <button onclick="showPage('home-page')" style="border:none; background:none; color:var(--accent); font-weight:900; cursor:pointer; font-size: 1.2rem;">🎀 Retour</button>
         <div class="elve-container">
             <div style="display:flex; justify-content:space-around; align-items:center;">
-                <div><small>YOU</small><div id="v-you" style="font-size:2rem; font-weight:900;">0</div></div>
-                <div id="profit-text" style="font-weight:900; color:#ccc;">VS</div>
-                <div><small>THEM</small><div id="v-them" style="font-size:2rem; font-weight:900; color:var(--accent);">0</div></div>
+                <div><small style="color:var(--accent)">YOU</small><div id="v-you" style="font-size:2.5rem; font-weight:900;">0</div></div>
+                <div id="profit-text" style="font-family:'Bubblegum Sans'; font-size: 2rem; color:var(--kawaii-pink)">VS</div>
+                <div><small style="color:var(--accent)">THEM</small><div id="v-them" style="font-size:2.5rem; font-weight:900; color:var(--accent);">0</div></div>
             </div>
+            <button onclick="resetTrade()" style="background:var(--kawaii-pink); border:none; padding:10px 20px; border-radius:20px; color:white; font-weight:900; cursor:pointer; margin-top:15px;">🧹 Clear All</button>
         </div>
-        <div style="display:flex; justify-content:center; gap:15px; flex-wrap:wrap;">
-            <div><h4 style="text-align:center; margin:5px;">YOU</h4><div id="grid-you" class="trade-grid"></div></div>
-            <div><h4 style="text-align:center; margin:5px;">THEM</h4><div id="grid-them" class="trade-grid"></div></div>
+        <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+            <div id="grid-you" class="trade-grid"></div>
+            <div id="grid-them" class="trade-grid"></div>
         </div>
     </div>
 
     <div id="list-page" class="section">
-        <button onclick="showPage('home-page')" style="border:none; background:none; color:var(--accent); font-weight:900; cursor:pointer;">← MENU</button>
-        <h2 style="text-align:center">TRENDS & VALUES</h2>
-        <div id="full-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap:10px;"></div>
+        <button onclick="showPage('home-page')" style="border:none; background:none; color:var(--accent); font-weight:900; cursor:pointer; font-size: 1.2rem;">🎀 Retour</button>
+        <h2 style="text-align:center; font-family:'Bubblegum Sans'; color:var(--accent); font-size: 2.5rem;">Value List ✨</h2>
+        <div id="full-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap:15px;"></div>
     </div>
 
     <div class="overlay" id="overlay" onclick="closePicker()"></div>
     <div id="picker">
-        <div class="mode-row">
+        <div style="display:flex; gap:5px; margin-bottom:15px; flex-wrap:wrap;">
             <button class="m-btn active" onclick="setM('reg', this)">REG</button>
             <button class="m-btn" onclick="setM('neon', this)">NEON</button>
             <button class="m-btn" onclick="setM('mega', this)">MEGA</button>
             <button class="m-btn" id="r-btn" onclick="toggleRF('R')">R</button>
             <button class="m-btn" id="f-btn" onclick="toggleRF('F')">F</button>
         </div>
-        <input type="text" id="search" placeholder="Search pet..." onkeyup="filterPets()" style="width:100%; padding:10px; border-radius:10px; border:1px solid #ddd; margin-bottom:10px; box-sizing: border-box;">
+        <input type="text" id="search" placeholder="Search a pet..." onkeyup="filterPets()" style="width:100%; padding:15px; border-radius:20px; border:2px solid var(--kawaii-pink); margin-bottom:15px; box-sizing: border-box;">
         <div id="pet-options"></div>
     </div>
 
     <script>
         const pets = [
-            // HIGH TIERS
-            { n: "Bat Dragon", v: 630, old: 625, r: "legendary" }, 
-            { n: "Shadow Dragon", v: 550, old: 560, r: "legendary" },
-            { n: "Giraffe", v: 220, old: 220, r: "legendary" }, 
-            { n: "Frost Dragon", v: 195, old: 190, r: "legendary" },
-            { n: "Owl", v: 165, old: 155, r: "legendary" }, 
-            { n: "Parrot", v: 135, old: 135, r: "legendary" },
-            { n: "Evil Unicorn", v: 99, old: 98, r: "legendary" }, 
-            { n: "Crow", v: 90, old: 90, r: "legendary" },
-            
-            // EXOTICS & MID TIERS
-            { n: "Balloon Unicorn", v: 75, old: 80, r: "legendary" }, 
-            { n: "Cryptid", v: 67, old: 60, r: "legendary" },
-            { n: "Diamond Butterfly", v: 55, old: 80, r: "legendary" }, 
-            { n: "Dalmatian", v: 45, old: 42, r: "ultra" },
-            { n: "Hedgehog", v: 39.5, old: 38, r: "ultra" }, 
-            { n: "African Wild Dog", v: 70, old: 22, r: "ultra" },
-            { n: "Turtle", v: 26, old: 22, r: "legendary" }, 
-            { n: "Kangaroo", v: 22, old: 28, r: "legendary" },
-            { n: "Cow", v: 26.5, old: 15, r: "rare" }, 
-            { n: "Elephant", v: 16, old: 12, r: "rare" },
-            { n: "Blue Dog", v: 28, old: 25, r: "uncommon" }, 
-            { n: "Pink Cat", v: 15, old: 12, r: "uncommon" },
-            
-            // SEARCHED / NEW
-            { n: "Caterpillar", v: 7, old: 4.5, r: "ultra" }, 
-            { n: "Puffin", v: 6, old: 5, r: "ultra" },
-            { n: "Jellyfish", v: 4.5, old: 3, r: "ultra" }, 
-            { n: "Peppermint Penguin", v: 23.5, old: 3.5, r: "ultra" },
-            { n: "Midnight Dragon", v: 6, old: 7, r: "legendary" }, 
-            { n: "Mechapup", v: 9.5, old: 8.5, r: "legendary" },
-            { n: "Nessie", v: 4, old: 3.5, r: "legendary" }, 
-            { n: "Tortuga de la Isla", v: 15.5, old: 5, r: "legendary" },
-            { n: "Vampire Dragon", v: 6.5, old: 4.5, r: "legendary" }, 
-            { n: "Lavender Dragon", v: 4.5, old: 3, r: "legendary" },
-            { n: "Ghost Dragon", v: 5.5, old: 3.5, r: "legendary" }, 
-            { n: "Squid", v: 1.5, old: 1, r: "legendary" },
-            { n: "Many Pelled Dog", v: 1.5, old: 1, r: "legendary" }, 
-            { n: "Glacier Moth", v: 3.5, old: 3, r: "legendary" },
-            { n: "Sugar Glider", v: 3.5, old: 3, r: "legendary" }, 
-            { n: "Dancing Dragon", v: 3, old: 3, r: "legendary" },
-            
-            // TOYS & ITEMS
-            { n: "Tombstone", v: 60, old: 50, r: "item" }, 
-            { n: "Candy Cannon", v: 135, old: 400, r: "item" },
-            { n: "Ride Potion", v: 2, old: 1.5, r: "item" }, 
-            { n: "Fly Potion", v: 3, old: 2.5, r: "item" },
-            { n: "Safari Egg", v: 115, old: 110, r: "item" }, 
+            // --- HIGH TIERS ---
+            { n: "Bat Dragon", v: 630, old: 625, r: "leg" },
+            { n: "Shadow Dragon", v: 550, old: 560, r: "leg" },
+            { n: "Giraffe", v: 220, old: 220, r: "leg" },
+            { n: "Frost Dragon", v: 195, old: 190, r: "leg" },
+            { n: "Owl", v: 165, old: 155, r: "leg" },
+            { n: "Parrot", v: 135, old: 135, r: "leg" },
+            { n: "Evil Unicorn", v: 99, old: 98, r: "leg" },
+            { n: "Crow", v: 90, old: 90, r: "leg" },
+
+            // --- EXOTICS & CUTE ---
+            { n: "African Wild Dog", v: 75, old: 70, r: "ultra" },
+            { n: "Balloon Unicorn", v: 75, old: 80, r: "leg" },
+            { n: "Cryptid", v: 67, old: 60, r: "leg" },
+            { n: "Tombstone", v: 60, old: 50, r: "item" },
+            { n: "Dalmatian", v: 45, old: 44, r: "ultra" },
+            { n: "Hedgehog", v: 40, old: 39, r: "ultra" },
+            { n: "Flamingo", v: 35, old: 34, r: "ultra" },
+            { n: "Blue Dog", v: 30, old: 28, r: "uncommon" },
+            { n: "Pink Cat", v: 18, old: 15, r: "uncommon" },
+            { n: "Turtle", v: 28, old: 27, r: "leg" },
+            { n: "Cow", v: 28, old: 26, r: "rare" },
+            { n: "Peppermint Penguin", v: 25, old: 22, r: "ultra" },
+            { n: "Pelican", v: 22, old: 20, r: "ultra" },
+            { n: "Caterpillar", v: 18, old: 15, r: "ultra" },
+            { n: "Tortuga de la Isla", v: 16, old: 15, r: "leg" },
+            { n: "Mini Pig", v: 12, old: 10, r: "rare" },
+            { n: "Majestic Pony", v: 11, old: 10, r: "leg" },
+            { n: "Sheeep", v: 10, old: 9, r: "ultra" },
+            { n: "Glormy Leo", v: 9.5, old: 8, r: "leg" },
+            { n: "Glormy Hound", v: 9.5, old: 8, r: "leg" },
+            { n: "Lion Cub", v: 8.5, old: 7, r: "ultra" },
+            { n: "Puffin", v: 7.5, old: 7, r: "ultra" },
+            { n: "Goat", v: 7, old: 6, r: "ultra" },
+            { n: "Sugar Glider", v: 6.5, old: 5.5, r: "leg" },
+            { n: "Nessie", v: 6, old: 5, r: "leg" },
+            { n: "Jellyfish", v: 5.5, old: 4, r: "ultra" },
+            { n: "Exo-cardinal", v: 5, old: 4.5, r: "rare" },
+            { n: "Alley Cat", v: 4.5, old: 3.5, r: "ultra" },
+            { n: "Candy Hare", v: 4, old: 3, r: "leg" },
+            { n: "Shepdog", v: 3.5, old: 3, r: "rare" },
+
+            // --- EGGS & POTS ---
+            { n: "Safari Egg", v: 115, old: 110, r: "item" },
+            { n: "Blue Egg", v: 95, old: 90, r: "item" },
+            { n: "Pink Egg", v: 80, old: 75, r: "item" },
             { n: "Jungle Egg", v: 65, old: 65, r: "item" },
-            { n: "Farm Egg", v: 35, old: 20, r: "item" }, 
-            { n: "Christmas Egg", v: 35, old: 3, r: "item" }
+            { n: "Farm Egg", v: 40, old: 38, r: "item" },
+            { n: "Christmas Egg", v: 38, old: 35, r: "item" },
+            { n: "Ride Potion", v: 2, old: 1.8, r: "item" },
+            { n: "Fly Potion", v: 3, old: 2.8, r: "item" }
         ];
 
         let curSide, curSlot, curM = 'reg', curR = false, curF = false;
@@ -146,16 +204,15 @@
             if(id === 'list-page') renderList();
         }
 
-        function setM(m, btn) {
-            curM = m; 
-            document.querySelectorAll('.m-btn').forEach(b => { if(!b.id.includes('-btn')) b.classList.remove('active') }); 
-            btn.classList.add('active');
-            renderOptions();
-        }
-
         function toggleRF(type) {
             if(type === 'R') { curR = !curR; document.getElementById('r-btn').classList.toggle('active'); }
             if(type === 'F') { curF = !curF; document.getElementById('f-btn').classList.toggle('active'); }
+        }
+
+        function setM(m, btn) {
+            curM = m; 
+            document.querySelectorAll('.m-btn').forEach(b => { if(!b.id.includes('-btn')) b.classList.remove('active') }); 
+            btn.classList.add('active'); renderOptions();
         }
 
         function openPicker(side, slot) {
@@ -170,14 +227,11 @@
             const container = document.getElementById('pet-options'); container.innerHTML = "";
             pets.forEach(p => {
                 let val = p.v;
-                if(p.r !== 'item') { 
-                    if(curM === 'neon') val *= 4; 
-                    if(curM === 'mega') val *= 16; 
-                }
+                if(p.r !== 'item') { if(curM === 'neon') val *= 4; if(curM === 'mega') val *= 16; }
                 const img = `https://adoptme.fandom.com/wiki/Special:FilePath/${p.n.replace(/ /g, "_")}.png?width=100`;
                 container.innerHTML += `<div class="pet-choice" onclick="selectPet('${p.n}', ${val}, '${img}')">
-                    <img src="${img}" style="width:35px;" onerror="this.src='https://via.placeholder.com/35'">
-                    <span style="flex:1">${p.n}</span><b>${val.toFixed(1)}</b>
+                    <img src="${img}" style="width:40px;" onerror="this.src='https://via.placeholder.com/40'">
+                    <span style="flex:1; font-weight:600;">${p.n}</span><b>${val.toFixed(1)}</b>
                 </div>`;
             });
         }
@@ -199,42 +253,44 @@
             updateValues();
         }
 
+        function resetTrade() {
+            dYou.fill(0); dThem.fill(0);
+            document.querySelectorAll('.slot').forEach(s => s.innerHTML = "+");
+            updateValues();
+        }
+
         function updateValues() {
             const sY = dYou.reduce((a,b)=>a+b,0), sT = dThem.reduce((a,b)=>a+b,0);
             document.getElementById('v-you').innerText = sY.toFixed(1);
             document.getElementById('v-them').innerText = sT.toFixed(1);
             const p = document.getElementById('profit-text');
             if(sY === 0 && sT === 0) { p.innerText = "VS"; p.style.color = "#ccc"; }
-            else if(sT > sY * 1.05) { p.innerText = "WIN! 🤑"; p.style.color = "#48bb78"; confetti(); }
-            else if(sT < sY * 0.95) { p.innerText = "LOSE! ❌"; p.style.color = "#f56565"; }
-            else { p.innerText = "FAIR! 🤝"; p.style.color = "#ecc94b"; }
+            else if(sT > sY * 1.05) { p.innerText = "MEGA WIN! 💖"; p.style.color = "#fb6f92"; confetti(); }
+            else if(sT < sY * 0.95) { p.innerText = "Lose... 🧊"; p.style.color = "#98f5ff"; }
+            else { p.innerText = "Fair! ✨"; p.style.color = "#ffd700"; }
         }
 
         function renderList() {
             const cont = document.getElementById('full-list'); cont.innerHTML = "";
-            const sortedPets = [...pets].sort((a,b) => b.v - a.v);
-            sortedPets.forEach(p => {
-                const tr = p.v > p.old ? `<span style="color:#38b2ac">▲</span>` : (p.v < p.old ? `<span style="color:#e53e3e">▼</span>` : "=");
-                cont.innerHTML += `<div class="pet-card" style="background:white; padding:10px; border-radius:15px; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,0.05);">
-                    <img src="https://adoptme.fandom.com/wiki/Special:FilePath/${p.n.replace(/ /g, "_")}.png?width=100" style="width:50px;" onerror="this.src='https://via.placeholder.com/50'">
-                    <div style="font-size:0.7rem; font-weight:900;">${p.n}</div>
+            [...pets].sort((a,b) => b.v - a.v).forEach(p => {
+                const tr = p.v > p.old ? `<span style="color:#fb6f92">▲</span>` : `<span style="color:#aaa">▼</span>`;
+                const rarityClass = p.r === 'leg' ? 'rarity-leg' : (p.r === 'ultra' ? 'rarity-ultra' : (p.r === 'rare' ? 'rarity-rare' : ''));
+                cont.innerHTML += `<div class="pet-card ${rarityClass}">
+                    <img src="https://adoptme.fandom.com/wiki/Special:FilePath/${p.n.replace(/ /g, "_")}.png?width=100" style="width:60px;">
+                    <div style="font-size:0.8rem; font-weight:900; margin: 5px 0;">${p.n}</div>
                     <div style="color:var(--accent); font-weight:900;">${p.v.toFixed(1)} ${tr}</div>
                 </div>`;
             });
         }
 
         function closePicker() { document.getElementById('picker').style.display='none'; document.getElementById('overlay').style.display='none'; }
-        
         function filterPets() {
             const val = document.getElementById('search').value.toLowerCase();
-            document.querySelectorAll('.pet-choice').forEach(el => { 
-                el.style.display = el.innerText.toLowerCase().includes(val) ? "flex" : "none"; 
-            });
+            document.querySelectorAll('.pet-choice').forEach(el => { el.style.display = el.innerText.toLowerCase().includes(val) ? "flex" : "none"; });
         }
 
         function init() {
             const gy = document.getElementById('grid-you'), gt = document.getElementById('grid-them');
-            gy.innerHTML = ""; gt.innerHTML = "";
             for(let i=0; i<9; i++) {
                 gy.innerHTML += `<div class="slot" id="sy-${i}" onclick="openPicker('you', ${i})">+</div>`;
                 gt.innerHTML += `<div class="slot" id="st-${i}" onclick="openPicker('them', ${i})">+</div>`;
@@ -243,4 +299,5 @@
         init();
     </script>
 </body>
-</html>
+    </html>
+    
