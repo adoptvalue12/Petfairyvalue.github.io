@@ -94,10 +94,12 @@
         .pet-choice { display: flex; align-items: center; gap: 12px; padding: 8px; background: #fffafa; border-radius: 15px; margin-bottom: 5px; cursor: pointer; border: 2px solid transparent; }
         .pet-choice:hover { border-color: var(--kawaii-pink); background: white; }
 
-        .pet-card { background: white; border-radius: 20px; padding: 10px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .pet-card { background: white; border-radius: 20px; padding: 10px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative; }
         .rarity-leg { border-bottom: 5px solid var(--leg-color); }
         .rarity-ultra { border-bottom: 5px solid var(--ultra-color); }
         .rarity-rare { border-bottom: 5px solid var(--rare-color); }
+
+        .trend-icon { font-size: 0.7rem; margin-left: 3px; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -151,38 +153,76 @@
     </div>
 
     <script>
-        // --- SOUND FUNCTION ---
         function playSound(type) {
             const sound = document.getElementById(type === 'pop' ? 'sound-pop' : 'sound-win');
             sound.currentTime = 0;
-            sound.play().catch(e => console.log("Audio needs user interaction first."));
+            sound.play().catch(e => {});
         }
 
         const pets = [
-            { n: "Bat Dragon", v: 630, r: "leg" }, { n: "Shadow Dragon", v: 550, r: "leg" },
-            { n: "Giraffe", v: 220, r: "leg" }, { n: "Frost Dragon", v: 195, r: "leg" },
-            { n: "Owl", v: 165, r: "leg" }, { n: "Parrot", v: 135, r: "leg" },
-            { n: "Evil Unicorn", v: 105, r: "leg" }, { n: "Crow", v: 95, r: "leg" },
-            { n: "African Wild Dog", v: 75, r: "ultra" }, { n: "Balloon Unicorn", v: 75, r: "leg" },
-            { n: "Cryptid", v: 67, r: "leg" }, { n: "Caterpillar", v: 35, r: "ultra" },
-            { n: "Pelican", v: 45, r: "ultra" }, { n: "Tortuga de la Isla", v: 22, r: "leg" },
-            { n: "Blue Dog", v: 35, r: "uncommon" }, { n: "Pink Cat", v: 20, r: "uncommon" },
-            { n: "Cow", v: 28, r: "rare" }, { n: "Turtle", v: 30, r: "leg" },
-            { n: "Kangaroo", v: 22, r: "leg" }, { n: "Dalmatian", v: 40, r: "ultra" },
-            { n: "Flamingo", v: 38, r: "ultra" }, { n: "Hedgehog", v: 50, r: "ultra" },
-            { n: "Lion Cub", v: 8.5, r: "ultra" }, { n: "Alley Cat", v: 4.5, r: "ultra" },
-            { n: "Sugar Glider", v: 7, r: "leg" }, { n: "Jellyfish", v: 6, r: "ultra" },
-            { n: "Mini Pig", v: 12, r: "rare" }, { n: "Glormy Leo", v: 10, r: "leg" },
-            { n: "Glormy Hound", v: 10, r: "leg" }, { n: "Majestic Pony", v: 11, r: "leg" },
-            { n: "Peppermint Penguin", v: 25, r: "ultra" }, { n: "Nessie", v: 8, r: "leg" },
-            { n: "Candy Hare", v: 5, r: "leg" }, { n: "Goat", v: 9, r: "ultra" },
-            { n: "Sheeep", v: 11, r: "ultra" }, { n: "Puffin", v: 8, r: "ultra" },
-            { n: "Hot Doggie", v: 9, r: "ultra" }, { n: "Mechapup", v: 11, r: "leg" },
-            { n: "Safari Egg", v: 115, r: "item" }, { n: "Blue Egg", v: 95, r: "item" },
-            { n: "Pink Egg", v: 85, r: "item" }, { n: "Jungle Egg", v: 70, r: "item" },
-            { n: "Farm Egg", v: 45, r: "item" }, { n: "Christmas Egg", v: 40, r: "item" },
-            { n: "Ride Potion", v: 2, r: "item" }, { n: "Fly Potion", v: 3, r: "item" },
-            { n: "Tombstone", v: 60, r: "item" }
+            // --- HIGH TIERS ---
+            { n: "Shadow Dragon", v: 1000, ov: 1000, r: "leg" },
+            { n: "Bat Dragon", v: 920, ov: 900, r: "leg" },
+            { n: "Giraffe", v: 650, ov: 660, r: "leg" },
+            { n: "Frost Dragon", v: 450, ov: 440, r: "leg" },
+            { n: "Owl", v: 310, ov: 305, r: "leg" },
+            { n: "Parrot", v: 250, ov: 250, r: "leg" },
+            { n: "Evil Unicorn", v: 195, ov: 200, r: "leg" },
+            { n: "Crow", v: 185, ov: 185, r: "leg" },
+
+            // --- MID TIERS / POPULAR ---
+            { n: "Arctic Reindeer", v: 65, ov: 65, r: "leg" },
+            { n: "Albino Monkey", v: 48, ov: 50, r: "leg" },
+            { n: "Turtle", v: 42, ov: 40, r: "leg" },
+            { n: "Kangaroo", v: 30, ov: 32, r: "leg" },
+            { n: "Cow", v: 38, ov: 35, r: "rare" },
+            { n: "Strawberry Shortcake Bat Dragon", v: 35, ov: 33, r: "leg" },
+            { n: "Blue Dog", v: 32, ov: 32, r: "uncommon" },
+            { n: "Pink Cat", v: 18, ov: 16, r: "uncommon" },
+            { n: "Dalmatian", v: 35, ov: 35, r: "ultra" },
+            { n: "Flamingo", v: 30, ov: 30, r: "ultra" },
+            { n: "Hedgehog", v: 55, ov: 58, r: "ultra" },
+            { n: "Croc", v: 15, ov: 15, r: "ultra" },
+
+            // --- EXOTICS (HIGH DEMAND) ---
+            { n: "African Wild Dog", v: 65, ov: 60, r: "ultra" },
+            { n: "Pelican", v: 55, ov: 55, r: "ultra" },
+            { n: "Caterpillar", v: 45, ov: 40, r: "ultra" },
+            { n: "Balloon Unicorn", v: 40, ov: 42, r: "leg" },
+            { n: "Hot Doggie", v: 35, ov: 30, r: "ultra" },
+            { n: "Puffin", v: 22, ov: 20, r: "ultra" },
+            { n: "Tortuga de la Isla", v: 20, ov: 18, r: "leg" },
+            { n: "Peppermint Penguin", v: 28, ov: 25, r: "ultra" },
+            { n: "Jellyfish", v: 15, ov: 12, r: "ultra" },
+            { n: "Many-Mackerel", v: 12, ov: 12, r: "ultra" },
+
+            // --- CUTE / KAWAII / PREPPY ---
+            { n: "Lion Cub", v: 12, ov: 10, r: "ultra" },
+            { n: "Sugar Glider", v: 9, ov: 8, r: "leg" },
+            { n: "Candy Hare", v: 8, ov: 8, r: "leg" },
+            { n: "Mini Pig", v: 15, ov: 13, r: "rare" },
+            { n: "Glormy Leo", v: 10, ov: 14, r: "leg" },
+            { n: "Glormy Hound", v: 10, ov: 14, r: "leg" },
+            { n: "Majestic Pony", v: 12, ov: 12, r: "leg" },
+            { n: "Nessie", v: 11, ov: 10, r: "leg" },
+            { n: "Goat", v: 10, ov: 10, r: "ultra" },
+            { n: "Lamb", v: 7, ov: 6, r: "ultra" },
+            { n: "Sheeep", v: 13, ov: 12, r: "ultra" },
+            { n: "Alley Cat", v: 5, ov: 5, r: "ultra" },
+            { n: "Bat 2020", v: 4, ov: 3.5, r: "uncommon" },
+            
+            // --- EGGS & SPECIAL ---
+            { n: "Safari Egg", v: 120, ov: 115, r: "item" },
+            { n: "Blue Egg", v: 100, ov: 100, r: "item" },
+            { n: "Pink Egg", v: 90, ov: 85, r: "item" },
+            { n: "Jungle Egg", v: 75, ov: 75, r: "item" },
+            { n: "Farm Egg", v: 55, ov: 55, r: "item" },
+            { n: "Christmas Egg", v: 45, ov: 45, r: "item" },
+            { n: "Ride Potion", v: 2, ov: 2, r: "item" },
+            { n: "Fly Potion", v: 3, ov: 3, r: "item" },
+            { n: "Tombstone", v: 65, ov: 65, r: "item" },
+            { n: "Balloon", v: 5, ov: 5, r: "item" },
+            { n: "Cryptid", v: 60, ov: 55, r: "leg" }
         ];
 
         let curSide, curSlot, curM = 'reg', curR = false, curF = false;
@@ -218,11 +258,11 @@
             const container = document.getElementById('pet-options'); container.innerHTML = "";
             pets.forEach(p => {
                 let val = p.v;
-                if(p.r !== 'item') { if(curM === 'neon') val *= 4; if(curM === 'mega') val *= 16; }
+                if(p.r !== 'item') { if(curM === 'neon') val *= 4.5; if(curM === 'mega') val *= 18; }
                 const img = `https://adoptme.fandom.com/wiki/Special:FilePath/${p.n.replace(/ /g, "_")}.png?width=100`;
                 container.innerHTML += `<div class="pet-choice" onclick="selectPet('${p.n}', ${val}, '${img}')">
                     <img src="${img}" style="width:35px;" onerror="this.src='https://via.placeholder.com/35'">
-                    <span style="flex:1; font-weight:600; font-size:0.85rem;">${p.n}</span><b>${val.toFixed(1)}</b>
+                    <span style="flex:1; font-weight:600; font-size:0.85rem;">${p.n}</span><b>${val.toFixed(0)}</b>
                 </div>`;
             });
         }
@@ -254,22 +294,15 @@
 
         function updateValues() {
             const sY = dYou.reduce((a,b)=>a+b,0), sT = dThem.reduce((a,b)=>a+b,0);
-            const oldYou = parseFloat(document.getElementById('v-you').innerText);
-            const oldThem = parseFloat(document.getElementById('v-them').innerText);
-            
-            document.getElementById('v-you').innerText = sY.toFixed(1);
-            document.getElementById('v-them').innerText = sT.toFixed(1);
-            
+            document.getElementById('v-you').innerText = sY.toFixed(0);
+            document.getElementById('v-them').innerText = sT.toFixed(0);
             const p = document.getElementById('profit-text');
             if(sY === 0 && sT === 0) { p.innerText = "VS"; }
-            else if(sT > sY * 1.05) { 
-                if (p.innerText !== "BIG WIN! 💖") { // Pour ne pas jouer le son en boucle
-                    playSound('win');
-                    confetti();
-                }
-                p.innerText = "BIG WIN! 💖"; 
+            else if(sT > sY * 1.08) { 
+                if (p.innerText !== "WIN! 💖") { playSound('win'); confetti(); }
+                p.innerText = "WIN! 💖"; 
             }
-            else if(sT < sY * 0.95) { p.innerText = "LOSE... 🧊"; }
+            else if(sT < sY * 0.92) { p.innerText = "LOSE... 🧊"; }
             else { p.innerText = "FAIR! ✨"; }
         }
 
@@ -277,10 +310,15 @@
             const cont = document.getElementById('full-list'); cont.innerHTML = "";
             [...pets].sort((a,b) => b.v - a.v).forEach(p => {
                 const rClass = p.r === 'leg' ? 'rarity-leg' : (p.r === 'ultra' ? 'rarity-ultra' : (p.r === 'rare' ? 'rarity-rare' : ''));
+                let trend = "";
+                if(p.v > p.ov) trend = `<span class="trend-icon" style="color:#fb6f92">▲</span>`;
+                else if(p.v < p.ov) trend = `<span class="trend-icon" style="color:#4cc9f0">▼</span>`;
+                else trend = `<span class="trend-icon" style="color:#ccc">●</span>`;
+
                 cont.innerHTML += `<div class="pet-card ${rClass}">
                     <img src="https://adoptme.fandom.com/wiki/Special:FilePath/${p.n.replace(/ /g, "_")}.png?width=100" style="width:50px;">
-                    <div style="font-size:0.75rem; font-weight:900;">${p.n}</div>
-                    <div style="color:var(--accent); font-weight:900; font-size:0.85rem;">${p.v.toFixed(1)}</div>
+                    <div style="font-size:0.65rem; font-weight:900; height:20px; overflow:hidden;">${p.n}</div>
+                    <div style="color:var(--accent); font-weight:900; font-size:0.85rem;">${p.v.toFixed(0)} ${trend}</div>
                 </div>`;
             });
         }
